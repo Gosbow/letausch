@@ -7,11 +7,16 @@ function logIn(){
     // Static Uname!
     let username = "romano@mimimi.at";
     let password = "NotThi$Time!";
+    let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if(typedInUsername == username && typedInPassword == password)
+    if(!mailformat.test(typedInUsername))
+    {
+        document.getElementById("messages").innerHTML = "Bitte geben Sie Ihre E-Mail Adresse an!";
+    } else if(typedInUsername === username && typedInPassword === password)
     {
 
         document.writeln("Herzlich Willkommen!");
+
     }else{
         counter--;
         document.getElementById("messages").innerHTML="Eingabe falsch!";
@@ -22,3 +27,4 @@ function logIn(){
     }
 
 }
+
