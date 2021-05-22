@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function (event){
             this.headerbuildSite.appendChild(this.introductionField);
             this.headerbuildSite.appendChild(this.messageHeadline);
             this.loginField();
+            let test = 1;
+
         }
 
         loginField(){
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function (event){
                 this.buttonLoginbuildSite.type = "button";
                 this.buttonLoginbuildSite.id = "login";
                 this.buttonLoginbuildSite.setAttribute("onclick", "logIn()");
-            this.buttonLoginbuildSite.textContent = "Login";
+                this.buttonLoginbuildSite.textContent = "Login";
                 this.buttonRegisterbuildSite = document.createElement("button");
                 this.buttonRegisterbuildSite.type = "button";
                 this.buttonRegisterbuildSite.id = "register";
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function (event){
                 this.mainbuildSite.appendChild(this.selectbuildSite);
                 this.selectbuildSite.appendChild(this.labelinputSiteUname);
                 this.selectbuildSite.appendChild(this.inputSiteUname);
-            this.selectbuildSite.appendChild(document.createElement("br"));
+                this.selectbuildSite.appendChild(document.createElement("br"));
                 this.selectbuildSite.appendChild(this.labelinputSitePassword);
                 this.selectbuildSite.appendChild(this.inputSitepassword);
                 this.selectbuildSite.appendChild(this.brSpace);
@@ -65,8 +67,12 @@ document.addEventListener("DOMContentLoaded", function (event){
                 this.selectbuildSite.appendChild(this.buttonRegisterbuildSite);
                 this.selectbuildSite.appendChild(this.spanMessagebuildSite);
         }
-
+        static test123(){
+            let test = 1;
+            return test;
+        }
         }
 
-    let test = new LoginSite();
+
+    let login = new LoginSite();
 });
