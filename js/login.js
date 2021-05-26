@@ -1,6 +1,6 @@
 let counter = 3;
 function logIn(){
-    // Get the Creds!
+    // Get   the Creds!
     let typedInUsername = document.getElementById("username").value;
     let typedInPassword = document.getElementById("password").value;
 

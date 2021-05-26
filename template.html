@@ -3,135 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <style>
-        #banner{
-            position: fixed;
-            top: 0;
-            width: 100%;
-        }
-        #logo{
-            margin: 10px;
-            background-color: white;
-            height: 40px;
-        }
-
-        nav{
-            position: center;
-            display: inline-block;
-        }
-
-        nav > ul, nav > ul > li > ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-
-        }
-
-        nav li {
-            margin: 0.2em;
-            padding: 0;
-            font-size: 1.5em;
-            flex: 1 1 0%;
-            width: 200px;
-        }
-        nav .submenu {
-            visibility: hidden;
-            height: 0;
-            z-index: 1000;
-        }
-        nav .submenu li {
-            display: block;
-            width: 170px;
-            margin-left: 30px;
-        }
-        nav li:hover  .submenu,
-        nav li:active  .submenu,
-        nav li:focus  .submenu {
-            visibility: visible;
-            height: auto;
-        }
-
-        @media (min-width: 45em) {
-            nav > ul {
-                flex-direction: row;
-            }
-            nav li {
-                flex: 1;
-                font-size: 1em;
-            }
-        }
-
-        nav a {
-            display: block;
-            padding: 0.4em;
-            text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 10px;
-            color: white;
-            background-color: #548235;
-        }
-
-        nav li[aria-current] a {
-            background-color: firebrick;
-            color: gold;
-        }
-
-        button{
-            display: inline-block;
-        }
-
-        nav a:focus,
-        nav a:hover,
-        nav li[aria-current] a:focus,
-        nav li[aria-current] a:hover {
-            color: black;
-            background-color: #A9D18E;
-            text-decoration: none;
-        }
-
-        #games:hover{
-            background-image: url('img/logo/categories/games.jpg');
-            background-size: 170px;
-            background-color: transparent;
-        }
-        #cd:hover{
-            background-image: url('img/logo/categories/cd.jpg');
-            background-size: 170px;
-            background-color: transparent;
-        }
-        #movies:hover{
-            background-image: url('img/logo/categories/movies.jpg');
-            background-size: 170px;
-            background-color: transparent;
-        }
-        #other:hover{
-            background-image: url('img/logo/categories/other.jpg');
-            background-size: 170px;
-            background-color: transparent;
-        }
-        #tools:hover{
-            background-image: url('img/logo/categories/tools.jpg');
-            background-size: 170px;
-            background-color: transparent;
-        }
-        #books:hover{
-            background-image: url('img/logo/categories/books.jpg');
-            background-size: 170px;
-            background-color: transparent;
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="designs/template.css">
 </head>
 <body>
+<div>
     <header id="banner">
         <img src="img/logo/LeTauschLogo2.png" id="logo">
         <nav>
             <ul>
-                <li><a href="">Stöbern</a>
+                <li><a href="stoebern.html">Stöbern</a>
                     <ul class="submenu">
                         <li><a id="games" href="">Games</a></li>
                         <li><a id="cd" href="">Vinyl/CD</a></li>
@@ -142,28 +24,32 @@
                     </ul>
                 </li>
 
-                <li><a href="">Meine Inserate</a></li>
+                <li><a href="myarea.html">Meine Inserate</a></li>
 
                 <li><a href="">Mein Account</a>
                     <ul class="submenu">
-
                         <li id="personaldata"><a href="">Persönliche Daten</a></li>
                         <li id="pwreset"><a href="">Passwort zurücksetzen</a></li>
                         <li id="deleteacc"><a href="">Account löschen</a></li>
-                        <li id="logout"><a href="">Abmelden</a></li>
+                        <li id="logout"><a href="index.html">Abmelden</a></li>
                     </ul>
                 </li>
 
-                <li class="search"><form action="">
+                <form action="">
+                <li>
+
                     <input type="text" placeholder="Suchen">
-                    <button type="submit">Senden</button>
-                </form>
+
                 </li>
+                    <li>
+                        <input type="submit"></i>
+
+                    </li>
+                </form>
 
             </ul>
         </nav>
     </header>
-
-
+</div>
 </body>
 </html>

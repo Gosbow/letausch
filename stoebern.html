@@ -6,49 +6,93 @@
   <meta content="LeTausch Website" name="description">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <script src="js/buildStandardSite.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="designs/template.css">
+  <link rel="stylesheet" href="designs/articles.css">
+
   <title>Welcome to LeTausch - The Next Generation Tauschbörse!</title>
 </head>
 <body>
-<header id="banner">
 
+<header id="banner">
+  <img src="img/logo/LeTauschLogo2.png" id="logo">
+  <nav>
+    <ul>
+      <li><a href="stoebern.html">Stöbern</a>
+        <ul class="submenu">
+          <li><a id="games" href="">Games</a></li>
+          <li><a id="cd" href="">Vinyl/CD</a></li>
+          <li><a id="movies" href="">Filme</a></li>
+          <li><a id="books" href="">Bücher</a></li>
+          <li><a id="tools" href="">Tools</a></li>
+          <li><a id="other" href="">Sonstiges</a></li>
+        </ul>
+      </li>
+
+      <li><a href="myarea.html">Meine Inserate</a></li>
+
+      <li><a href="">Mein Account</a>
+        <ul class="submenu">
+          <li id="personaldata"><a href="">Persönliche Daten</a></li>
+          <li id="pwreset"><a href="">Passwort zurücksetzen</a></li>
+          <li id="deleteacc"><a href="">Account löschen</a></li>
+          <li id="logout"><a href="index.html">Abmelden</a></li>
+        </ul>
+      </li>
+
+      <form action="">
+        <li>
+
+          <input type="text" placeholder="Suchen">
+
+        </li>
+        <li>
+          <input type="submit"></i>
+
+        </li>
+      </form>
+
+    </ul>
+  </nav>
 </header>
 
-<nav id="navigation">
-
-</nav>
-
+<div>
 <main id="mainSite"></main>
+
 <section>
-  <h1>Stöbern:</h1>
-  <article id="0">
+  <article class="articles" id="0">
     <img src="https://upload.wikimedia.org/wikipedia/en/1/16/RoboCop_%281987%29_theatrical_poster.jpg" alt="Robocop - BluRay" />
     <a > <h2>RoCop - BluRay</h2></a>
-    <div>Kategorie: Video</div>
+    <p>Kategorie: Video</p>
     <p>Inseriert am: 12.05.2021</p>
     <p>Interessenten: 5</p>
   </article>
-  <article id="1">
+  <article class="articles" id="1">
     <img src="img/1/cover.jpg" alt="Linus Torvalds - Just for Fun" />
     <a href="inserate/id1.html" target="_self" id="linkid1"> <h2>Linus Torvalds - Just for Fun</h2></a>
-    <div>Kategorie: Buch</div>
+    <p>Kategorie: Buch</p>
     <p>Inseriert am: 12.05.2021</p>
     <p>Interessenten: 5</p>
-  <article id="2">
+  </article>
+  <article class="articles" id="2">
     <img src="img/2/cover.jpg" alt="Sim City - SNES" />
     <a href="inserate/id2.html" target="_self" id="linkid2"><h2>Sim City - SNES Cartridge</h2></a>
-    <div>Kategorie: Games</div>
+    <p>Kategorie: Games</p>
     <p>Inseriert am: 04.05.2021</p>
     <p>Interessenten: 2</p>
   </article>
 
-  <article id="3">
+  <article class="articles" id="3">
     <img src="img/3/cover.jpg" alt="Trivial Pursuit - Familienedition" />
     <a  target="_self" id="linkid3"><h2>Trivial Pursuit - Familienedition</h2></a>
-    <div>Kategorie: Brettspiel</div>
+    <p>Kategorie: Brettspiel</p>
     <p>Inseriert am: 15.05.2021</p>
     <p>Interessenten: 1</p>
   </article>
+
 </section>
+</div>
 </body>
 <footer id="footer"></footer>
 </html>

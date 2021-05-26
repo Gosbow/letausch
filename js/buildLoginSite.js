@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function (event){
                 this.selectbuildSite.appendChild(this.brSpace);
                 this.selectbuildSite.appendChild(this.buttonLoginbuildSite);
                 this.selectbuildSite.appendChild(this.buttonRegisterbuildSite);
+                //BR NEEDED
                 this.selectbuildSite.appendChild(this.spanMessagebuildSite);
         }
         static test123(){

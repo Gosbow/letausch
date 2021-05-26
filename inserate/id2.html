@@ -5,30 +5,67 @@
   <meta content="Hami Sing, Bernhard Vogler, Roman Schuller" name="Author">
   <meta content="LeTausch Website" name="description">
   <script src="../js/buildStandardSite.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../designs/template.css">
+  <link rel="stylesheet" href="../designs/articles.css">
   <title>LeTausch - Meine Inserate</title>
 </head>
 <body>
-<header id="banner">
 
+<header id="banner">
+  <img src="../img/logo/LeTauschLogo2.png" id="logo">
+  <nav>
+    <ul>
+      <li><a href="../stoebern.html">Stöbern</a>
+        <ul class="submenu">
+          <li><a id="games" href="">Games</a></li>
+          <li><a id="cd" href="">Vinyl/CD</a></li>
+          <li><a id="movies" href="">Filme</a></li>
+          <li><a id="books" href="">Bücher</a></li>
+          <li><a id="tools" href="">Tools</a></li>
+          <li><a id="other" href="">Sonstiges</a></li>
+        </ul>
+      </li>
+
+      <li><a href="../myarea.html">Meine Inserate</a></li>
+
+      <li><a href="">Mein Account</a>
+        <ul class="submenu">
+          <li id="personaldata"><a href="">Persönliche Daten</a></li>
+          <li id="pwreset"><a href="">Passwort zurücksetzen</a></li>
+          <li id="deleteacc"><a href="">Account löschen</a></li>
+          <li id="logout"><a href="../index.html">Abmelden</a></li>
+        </ul>
+      </li>
+
+      <form action="">
+        <li>
+
+          <input type="text" placeholder="Suchen">
+
+        </li>
+        <li>
+          <input type="submit"></i>
+
+        </li>
+      </form>
+
+    </ul>
+  </nav>
 </header>
 
-<nav id="navigation">
-
-</nav>
-
+<div class="specificarticle">
 <main id="mainSite"></main>
 <section>
-  <h1>Meine Inserate:</h1>
+  <h1>Mein Inserat</h1>
   <article id="2">
     <img src="../img/2/cover.jpg" alt="Sim City - SNES" />
     <h2>Sim City - SNES Cartridge</h2>
-    <div>Kategorie: Games</div>
-    <br>
-    <div>Regionalcode: PAL</div>
-    <br>
-    <div>Plattform: Super Nintendo</div>
-    <br>
-    <div>Zustand: gebraucht</div>
+    <p>Kategorie: Games</p>
+    <p>Regionalcode: PAL</p>
+    <p>Plattform: Super Nintendo</p>
+    <p>Zustand: gebraucht</p>
     <p>Inseriert am: 04.05.2021</p>
     <p>Interessenten: 2</p>
     <h2>Beschreibung</h2>
@@ -40,10 +77,12 @@
     <p>Eigene Bilder:</p>
     <img src="../img/2/1.png" alt="Eigen 1">
     <img src="../img/2/2.jpg" alt="Eigen 2">
+    <br>
     <button onclick="history.back()" >Zurück</button>
     <button type="button" >Inserat löschen!</button>
   </article>
 </section>
+</div>
 </body>
 <footer id="footer"></footer>
 </html>
