@@ -1,0 +1,27 @@
+.articles{
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #548235;
+    margin-top: 10px;
+}
+.articles:hover{
+    border-color: #A9D18E;
+}
+
+img{
+    width: 10vw;
+    margin: 10px;
+}
+.articles a{
+    margin-top: 0;
+}
+div{
+    margin:80px;
+}
+.specificarticle{
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #548235;
+    margin-top: 100px;
+    padding: 10px;
+}
