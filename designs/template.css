@@ -1,3 +1,7 @@
+*{
+    font-family: "Arial" ;
+}
+
 #banner{
     position: fixed;
     top: 0;
@@ -6,10 +10,12 @@
 #logo{
     margin: 10px;
     background-color: white;
-    height: 40px;
+    height: 10%;
+    width: 10%;
+    left: 0;
 }
-nav{
-    position: center;
+nav {
+    left: 0;
     display: inline-block;
 }
 nav > ul, nav > ul > li > ul {

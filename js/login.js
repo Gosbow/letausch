@@ -14,8 +14,7 @@ function logIn(){
         document.getElementById("messages").innerHTML = "Bitte geben Sie Ihre E-Mail Adresse an!";
     } else if(typedInUsername === username && typedInPassword === password)
     {
-
-        document.writeln("Herzlich Willkommen!");
+        window.open("stoebern.html");
 
     }else{
         counter--;
