@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fetch(searchURL + input)
             .then(response => response.json())
             .then(function(data) {
-                // console.log(data);
+                console.log(data);
                 Books.printInput(data, 1);
             });
     }
