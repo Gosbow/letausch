@@ -8,6 +8,11 @@ function submitPersonalData() {
     {
         document.getElementById("messages").innerHTML = "Bitte füllen Sie alle Pflichtfelder aus!";
     } else{
+        // PUSH USERNAME
+        // PUSH PASSWORD
+        // PUSH FIRSTNAME
+        // PUSH LASTNAME
+
         window.open("../stoebern.html", "_self");
     }
 }
