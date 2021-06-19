@@ -1,15 +1,15 @@
 function loadPosts(){
 
     // GET ARTICLE TITLE A
-    var titelA;
+    var titelA = "ABC";
     // GET ARTICLE TITLE B
-    var titelB;
+    var titelB = "GGG";
     // GET REQUESTING USER A
-    var userA;
+    var userA = "Alice";
     // GET RESPONDING USER B
-    var userB;
+    var userB = "Bob";
     // GET STATUS
-    var status;
+    var status = 0;
 
     var article = document.createElement("article");
     article.setAttribute("id", "atricle")
@@ -23,7 +23,7 @@ function loadPosts(){
 
 
     if(status == 0){
-        notification.innerHTML = "<USER A> möchte gerne <TITLE B> eintauschen."; // add as defined
+        notification.innerHTML = "$userA möchte gerne <TITLE B> eintauschen."; // add as defined
         notificationaction.innerHTML = "Eintasuchen";
         notificationaction.setAttribute("onclick", "eintasuchen()");
     }
@@ -39,9 +39,27 @@ function loadPosts(){
         notificationaction.setAttribute("onclick", "kontaktdaten()");
     }
 
-    document.getElementsByTagName("section").appendChild(article);
+    document.getElementById("content").appendChild(article);
     document.getElementById("article").appendChild(notification);
     document.getElementById("article").appendChild(notificationaction);
+}
+
+function eintauschen() {
+
+
+    // PUSH STATUS status++
+}
+
+function annehmen() {
+
+
+    // PUSH STATUS status++
+}
+
+function kontaktdaten() {
+
+
+    // PUSH STATUS status++ = 4 (disabled)
 }
 
 loadPosts();
