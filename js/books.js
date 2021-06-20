@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    const searchURL = "http://openlibrary.org/search.json?q=";
+    const searchURL = "http://localhost:3000/b/ol/";
 
     function searchInput(){
         document.getElementById("title").value = "";
@@ -8,41 +8,39 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("books_isbn").value = "";
 
         let input = document.getElementById("searchField").value;
-        input = input.replace(/\s/g, "+");
-        console.log(searchURL + input);
+        console.log("GET to server: " + searchURL + input);
         fetch(searchURL + input)
-            .then(response => response.json())
-            .then(function(data) {
-                console.log(data);
-                Books.printInput(data, 1);
-            });
+            .then(function(response){
+                response.json()
+                    .then(function(json){
+                        Book.printInput(json);
+                    })
+            })
     }
 
-    class Books{
-        constructor(title, author, publicationsdate, books_isbn) {
+    class Book{
+        constructor(title, author, publicationdate, books_isbn) {
             this.title = title;
             this.author = author;
-            this.publicationsdate = publicationsdate;
-            this.book_isbn = books_isbn;
+            this.publicationdate = publicationdate;
+            this.books_isbn = books_isbn;
         }
 
-        static printInput(input, index){
-            console.log(input.docs[index]);
-            let book = input.docs[index];
-            document.getElementById("title").value = book.title.toString();
-            document.getElementById("author").value = book.author_name.toString();
-            document.getElementById("publicationdate").value = book.first_publish_year.toString();
-            document.getElementById("books_isbn").value = book.isbn[0].toString();
+        static printInput(input){
+            document.getElementById("title").value = input.title;
+            document.getElementById("author").value = input.author;
+            document.getElementById("publicationdate").value = input.publicationdate;
+            document.getElementById("books_isbn").value = "" + input.books_isbn;
         }
 
         static postBook(){
-            let book = new Books(
+            let book = new Book(
                 document.getElementById("title").value.toString(),
                 document.getElementById("author").value.toString(),
                 document.getElementById("publicationdate").value.toString(),
                 document.getElementById("books_isbn").value.toString());
 
-            // To-Do implement fetch for POST METHOOD
+            // To-Do implement fetch for POST METHOD
         }
     }
 
@@ -51,6 +49,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     searchButton.addEventListener('click', searchInput,false);
 
     let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', Books.postBook,false);
+    createButton.addEventListener('click', Book.postBook,false);
 
 });
