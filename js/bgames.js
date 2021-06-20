@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    const searchURL = "http://localhost:3000/bg/bgg/";
+    const searchURL = "http://localhost:3000/webapi/bgg/";
 
     function searchInput(){
         document.getElementById("title").value = "";
