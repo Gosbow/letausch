@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/bgg/";
+    let createTrue = true;
 
     function searchInput(){
         document.getElementById("title").value = "";
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.genre = genre;
             this.bgame_players = bgame_players;
             this.bgame_playtime = bgame_playtime;
+            this.category = "Boardgame";
         }
 
         static printInput(input){

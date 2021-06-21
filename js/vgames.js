@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/gb/";
+    let createTrue = true;
 
     function searchInput(){
         document.getElementById("title").value = "";
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.vgame_platform = vgame_platform;
             this.genre = genre;
             this.description = description;
+            this.category = "Videogame";
         }
 
 

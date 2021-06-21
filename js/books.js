@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/ol/";
+    let createTrue = true;
 
     function searchInput(){
         document.getElementById("title").value = "";
@@ -24,13 +25,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.author = author;
             this.publicationdate = publicationdate;
             this.books_isbn = books_isbn;
+            this.category = "Book";
         }
 
         static printInput(input){
             document.getElementById("title").value = input.title;
             document.getElementById("author").value = input.author;
             document.getElementById("publicationdate").value = input.publicationdate;
-            document.getElementById("books_isbn").value = "" + input.books_isbn;
+            document.getElementById("books_isbn").value = input.books_isbn.toString();
         }
 
         static postBook(){
@@ -45,10 +47,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
 
+
     let searchButton = document.getElementById("searchButton");
     searchButton.addEventListener('click', searchInput,false);
 
     let createButton = document.getElementById("createButton");
     createButton.addEventListener('click', Book.postBook,false);
+
+    let updateButton = document.getElementById("updateButton").disabled = true;
 
 });
