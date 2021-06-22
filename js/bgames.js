@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     class Boardgame{
-        constructor(title, author, publicationsdate, genre, rating, bgame_players, bgame_playtime) {
+        constructor(title, author, publicationdate, genre, rating, bgame_players, bgame_playtime) {
             this.title = title;
             this.author = author;
-            this.publicationsdate = publicationsdate;
+            this.publicationdate = publicationdate;
             this.genre = genre;
             this.bgame_players = bgame_players;
             this.bgame_playtime = bgame_playtime;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         static printInput(input){
             document.getElementById("title").value = input.title;
             document.getElementById("author").value = input.author;
-            document.getElementById("publicationdate").value = input.publicationsdate;
+            document.getElementById("publicationdate").value = input.publicationdate;
             document.getElementById("genre").value = input.genre;
             document.getElementById("bgame_players").value = input.bgame_players;
             document.getElementById("bgame_playtime").value = input.bgame_playtime;
