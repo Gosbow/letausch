@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/gb/";
+    const postURL = "http://localhost:3000/article";
+
     let createTrue = true;
 
     function searchInput(){
@@ -9,6 +11,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         document.getElementById("a_vgame_platform").value = "";
         document.getElementById("a_genre").value = "";
         document.getElementById("a_description").value = "";
+
+        let platform = document.getElementById("a_vgame_platform");
+        while (platform.firstChild) {
+            platform.removeChild(platform.lastChild);
+        }
 
         let input = document.getElementById("searchField").value;
         console.log("GET to server: " + searchURL + input);
@@ -37,9 +44,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("a_title").value = input.a_title;
             document.getElementById("a_author").value = input.a_author;
             document.getElementById("a_publicationdate").value = input.a_publicationdate;
-            document.getElementById("a_vgame_platform").value = input.a_vgame_platform;
             document.getElementById("a_genre").value = input.a_genre;
             document.getElementById("a_description").value = input.a_description;
+            let datalist = document.getElementById("a_vgame_platform");
+            for(let i = 0; i < input.a_vgame_platform.length; i++) {
+                let option = document.createElement("option");
+                option.value = input.a_vgame_platform[i];
+                datalist.appendChild(option);
+            }
         }
 
         static postVideogame(){
@@ -48,10 +60,23 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("a_author").value.toString(),
                 document.getElementById("a_publicationdate").value.toString(),
                 document.getElementById("a_vgame_platform").value.toString(),
-                document.getElementById("a_genre").value.toString());
-                document.getElementById("a_description").description.toString();
+                document.getElementById("a_genre").value.toString(),
+                document.getElementById("a_description").value.toString());
 
-            // To-Do implement fetch for POST METHOD
+            fetch(postURL, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(videogame),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Videogame POST Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Videogame POST Error: ", error);
+                })
         }
     }
 
