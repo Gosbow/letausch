@@ -13,7 +13,7 @@ function submitPersonalData() {
         // PUSH FIRSTNAME
         // PUSH LASTNAME
 
-        window.open("../stoebern.html", "_self");
+        window.open("../browse.html", "_self");
     }
 }
 

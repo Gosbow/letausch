@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let createTrue = true;
 
     class BoardGame{
-        constructor() {
+        constructor(data) {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_genre = document.getElementById("a_genre").value.toString();

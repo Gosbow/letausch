@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let createTrue = true;
 
     class Book{
-        constructor() {
+        constructor(data) {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();

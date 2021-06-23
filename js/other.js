@@ -4,10 +4,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
     let createTrue = true;
 
     class Other{
-        constructor() {
+        constructor(data) {
             this.a_title = document.getElementById("a_title").value;
             this.a_description = document.getElementById("a_description").description;
-
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Other";
         }
