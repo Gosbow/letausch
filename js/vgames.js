@@ -4,64 +4,59 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     let createTrue = true;
 
-    function searchInput(){
-        document.getElementById("a_title").value = "";
-        document.getElementById("a_author").value = "";
-        document.getElementById("a_publicationdate").value = "";
-        document.getElementById("a_vgame_platform").value = "";
-        document.getElementById("a_genre").value = "";
-        document.getElementById("a_description").value = "";
+    class VideoGame{
+        constructor() {
+            this.a_title = document.getElementById("a_title").value.toString();
+            this.a_author = document.getElementById("a_author").value.toString();
+            this.a_vgame_platform = document.getElementById("a_vgame_platform").value.toString();
+            this.a_genre = document.getElementById("a_genre").value.toString();
+            this.a_description = document.getElementById("a_description").value.toString();
+            this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
 
-        let platform = document.getElementById("a_vgame_platform");
-        while (platform.firstChild) {
-            platform.removeChild(platform.lastChild);
-        }
-
-        let input = document.getElementById("searchField").value;
-        console.log("GET to server: " + searchURL + input);
-        fetch(searchURL + input)
-            .then(function(response){
-                response.json()
-                    .then(function(json){
-                        Videogame.printInput(json);
-                    })
-            })
-    }
-
-    class Videogame{
-        constructor(a_title, a_author, a_publicationdate, a_vgame_platform, a_genre, a_description) {
-            this.a_title = a_title;
-            this.a_author = a_author;
-            this.a_publicationdate = a_publicationdate;
-            this.a_vgame_platform = a_vgame_platform;
-            this.a_genre = a_genre;
-            this.a_description = a_description;
+            this.a_publicationdate = new Date().toISOString();
             this.a_category = "Videogame";
         }
 
+        static getSearch(){
+            document.getElementById("a_title").value = "";
+            document.getElementById("a_author").value = "";
+            document.getElementById("a_vgame_platform").value = "";
+            document.getElementById("a_genre").value = "";
+            document.getElementById("a_description").value = "";
+            document.getElementById("a_imageurl").setAttribute("src","");
 
-        static printInput(input){
-            document.getElementById("a_title").value = input.a_title;
-            document.getElementById("a_author").value = input.a_author;
-            document.getElementById("a_publicationdate").value = input.a_publicationdate;
-            document.getElementById("a_genre").value = input.a_genre;
-            document.getElementById("a_description").value = input.a_description;
+            let platform = document.getElementById("a_vgame_platform");
+            while (platform.firstChild) {
+                platform.removeChild(platform.lastChild);
+            }
+
+            let input = document.getElementById("searchField").value;
+            console.log("GET to server: " + searchURL + input);
+            fetch(searchURL + input)
+                .then(function(response){
+                    response.json()
+                        .then(function(json){
+                            VideoGame.printData(json);
+                        })
+                })
+        }
+
+        static printData(data){
+            document.getElementById("a_title").value = data.a_title;
+            document.getElementById("a_author").value = data.a_author;
+            document.getElementById("a_genre").value = data.a_genre;
+            document.getElementById("a_description").value = data.a_description;
+            document.getElementById("a_imageurl").setAttribute("src", data.a_imageurl);
             let datalist = document.getElementById("a_vgame_platform");
-            for(let i = 0; i < input.a_vgame_platform.length; i++) {
+            for(let i = 0; i < data.a_vgame_platform.length; i++) {
                 let option = document.createElement("option");
-                option.value = input.a_vgame_platform[i];
+                option.value = data.a_vgame_platform[i];
                 datalist.appendChild(option);
             }
         }
 
-        static postVideogame(){
-            let videogame = new Videogame(
-                document.getElementById("a_title").value.toString(),
-                document.getElementById("a_author").value.toString(),
-                document.getElementById("a_publicationdate").value.toString(),
-                document.getElementById("a_vgame_platform").value.toString(),
-                document.getElementById("a_genre").value.toString(),
-                document.getElementById("a_description").value.toString());
+        static postVideoGame(){
+            let videogame = new VideoGame();
 
             fetch(postURL, {
                 method: "POST",
@@ -78,14 +73,53 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.error("Videogame POST Error: ", error);
                 })
         }
+
+        static putVideoGame(){
+            let videogame = new VideoGame();
+
+            let putURL = postURL + "/ID!!";
+
+            fetch(putURL, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(videogame),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Videogame PUT Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Videogame PUT Error: ", error);
+                })
+        }
+
+        static deleteVideoGame(){
+            let deleteURL = postURL + "/ID!!!";
+
+            fetch(deleteURL, {
+                method: "DELETE"
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Videogame DELETE Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Videogame DELETE Error: ", error);
+                })
+        }
     }
 
     let searchButton = document.getElementById("searchButton");
-    searchButton.addEventListener('click', searchInput,false);
+    searchButton.addEventListener('click', VideoGame.getSearch,false);
 
     let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', Videogame.postVideogame,false);
+    createButton.addEventListener('click', VideoGame.postVideoGame,false);
+    createButton.addEventListener('click', function(){
+        document.getElementById("createButton").disabled = true;
+    },false);
 
-    let updateButton = document.getElementById("updateButton").disabled = true;
-
+    let updateButton = document.getElementById("updateButton");
+    updateButton.disabled = true;
 });

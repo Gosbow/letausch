@@ -1,71 +1,120 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/bgg/";
+    const postURL = "http://localhost:3000/article";
+
     let createTrue = true;
 
-    function searchInput(){
-        document.getElementById("a_title").value = "";
-        document.getElementById("a_author").value = "";
-        document.getElementById("a_publicationdate").value = "";
-        document.getElementById("a_genre").value = "";
-        document.getElementById("a_bgame_players").value = "";
-        document.getElementById("a_bgame_playtime").value = "";
-        document.getElementById("a_description").value = "";
+    class BoardGame{
+        constructor() {
+            this.a_title = document.getElementById("a_title").value.toString();
+            this.a_author = document.getElementById("a_author").value.toString();
+            this.a_genre = document.getElementById("a_genre").value.toString();
+            this.a_bgame_players = document.getElementById("a_bgame_players").value.toString();
+            this.a_bgame_playtime = document.getElementById("a_bgame_playtime").value.toString();
+            this.a_description = document.getElementById("a_description").value.toString();
+            this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
 
-        let input = document.getElementById("searchField").value;
-        console.log("GET to server: " + searchURL + input);
-        fetch(searchURL + input)
-            .then(function(response){
-                response.json()
-                    .then(function(json){
-                        Boardgame.printInput(json);
-                    })
-            })
-    }
-
-    class Boardgame{
-        constructor(a_title, a_author, a_publicationdate, a_genre, a_bgame_players, a_bgame_playtime, a_description) {
-            this.a_title = a_title;
-            this.a_author = a_author;
-            this.a_publicationdate = a_publicationdate;
-            this.a_genre = a_genre;
-            this.a_bgame_players = a_bgame_players;
-            this.a_bgame_playtime = a_bgame_playtime;
-            this.a_description = a_description;
+            this.a_publicationdate = new Date().toISOString();
             this.a_category = "Boardgame";
         }
 
-        static printInput(input){
-            document.getElementById("a_title").value = input.a_title;
-            document.getElementById("a_author").value = input.a_author;
-            document.getElementById("a_publicationdate").value = input.a_publicationdate;
-            document.getElementById("a_genre").value = input.a_genre;
-            document.getElementById("a_bgame_players").value = input.a_bgame_players;
-            document.getElementById("a_bgame_playtime").value = input.a_bgame_playtime;
-            if(!typeof input.a_description === undefined){
-                document.getElementById("a_description").value = input.a_description;
+        static getSearch(){
+            document.getElementById("a_title").value = "";
+            document.getElementById("a_author").value = "";
+            document.getElementById("a_genre").value = "";
+            document.getElementById("a_bgame_players").value = "";
+            document.getElementById("a_bgame_playtime").value = "";
+            document.getElementById("a_description").value = "";
+            document.getElementById("a_imageurl").setAttribute("src","");
+
+            let input = document.getElementById("searchField").value;
+            console.log("GET to server: " + searchURL + input);
+            fetch(searchURL + input)
+                .then(function(response){
+                    response.json()
+                        .then(function(json){
+                            BoardGame.printData(json);
+                        })
+                })
+        }
+
+        static printData(data){
+            document.getElementById("a_title").value = data.a_title;
+            document.getElementById("a_author").value = data.a_author;
+            document.getElementById("a_genre").value = data.a_genre;
+            document.getElementById("a_bgame_players").value = data.a_bgame_players;
+            document.getElementById("a_bgame_playtime").value = data.a_bgame_playtime;
+            document.getElementById("a_imageurl").setAttribute("src", data.a_imageurl);
+            if(!typeof data.a_description === undefined){
+                document.getElementById("a_description").value = data.a_description;
             }
         }
 
         static postBoardGame(){
-            let boardgame = new Boardgame(
-                document.getElementById("a_title").value.toString(),
-                document.getElementById("a_author").value.toString(),
-                document.getElementById("a_publicationdate").value.toString(),
-                document.getElementById("a_genre").value.toString());
-                document.getElementById("a_bgame_players").value.toString();
-                document.getElementById("a_bgame_playtime").value.toString();
-                document.getElementById("a_description").value.toString();
+            let boardgame = new BoardGame();
 
-            // To-Do implement fetch for POST METHOD
+            fetch(postURL, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(boardgame),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Boardgame POST Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Boardgame POST Error: ", error);
+                })
+        }
+
+        static putBoardGame(){
+            let boardgame = new BoardGame();
+
+            let putURL = postURL + "/ID!!";
+0
+            fetch(putURL, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(boardgame),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Boardgame PUT Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Boardgame PUT Error: ", error);
+                })
+        }
+
+        static deleteBoardGame(){
+            let deleteURL = postURL + "/ID!!!";
+
+            fetch(deleteURL, {
+                method: "DELETE"
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Boardgame DELETE Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Boardgame DELETE Error: ", error);
+                })
         }
     }
 
     let searchButton = document.getElementById("searchButton");
-    searchButton.addEventListener('click', searchInput,false);
+    searchButton.addEventListener('click', BoardGame.getSearch,false);
 
     let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', Boardgame.postBoardGame,false);
+    createButton.addEventListener('click', BoardGame.postBoardGame,false);
+    createButton.addEventListener('click', function(){
+        document.getElementById("createButton").disabled = true;
+    },false);
 
-    let updateButton = document.getElementById("updateButton").disabled = true;
-
+    let updateButton = document.getElementById("updateButton");
+    updateButton.disabled = true;
 });

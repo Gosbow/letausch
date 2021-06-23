@@ -1,64 +1,115 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/ol/";
+    const postURL = "http://localhost:3000/article";
+
     let createTrue = true;
 
-    function searchInput(){
-        document.getElementById("a_title").value = "";
-        document.getElementById("a_author").value = "";
-        document.getElementById("a_publicationdate").value = "";
-        document.getElementById("a_books_isbn").value = "";
-        document.getElementById("a_description").value = "";
-
-        let input = document.getElementById("searchField").value;
-        console.log("GET to server: " + searchURL + input);
-        fetch(searchURL + input)
-            .then(function(response){
-                response.json()
-                    .then(function(json){
-                        Book.printInput(json);
-                    })
-            })
-    }
-
     class Book{
-        constructor(a_title, a_author, a_publicationdate, a_books_isbn, a_description) {
-            this.a_title = a_title;
-            this.a_author = a_author;
-            this.a_publicationdate = a_publicationdate;
-            this.a_books_isbn = a_books_isbn;
-            this.a_description = a_description;
+        constructor() {
+            this.a_title = document.getElementById("a_title").value.toString();
+            this.a_author = document.getElementById("a_author").value.toString();
+            this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();
+            this.a_description = document.getElementById("a_description").value.toString();
+
+            this.a_publicationdate = new Date().toISOString();
             this.a_category = "Book";
         }
 
-        static printInput(input){
-            document.getElementById("a_title").value = input.a_title;
-            document.getElementById("a_author").value = input.a_author;
-            document.getElementById("a_publicationdate").value = input.a_publicationdate;
-            document.getElementById("a_books_isbn").value = input.a_books_isbn.toString();
-            if(!typeof input.a_description === undefined){
-                document.getElementById("a_description").value = input.a_description;
+        static getSearch(){
+            document.getElementById("a_title").value = "";
+            document.getElementById("a_author").value = "";
+            document.getElementById("a_books_isbn").value = "";
+            document.getElementById("a_description").value = "";
+            document.getElementById("a_imageurl").setAttribute("src","");
+
+            let input = document.getElementById("searchField").value;
+            console.log("GET to server: " + searchURL + input);
+            fetch(searchURL + input)
+                .then(function(response){
+                    response.json()
+                        .then(function(json){
+                            Book.printData(json);
+                        })
+                })
+        }
+
+        static printData(data){
+            document.getElementById("a_imageurl").setAttribute("src","../img/book_placeholder.jpg");
+            document.getElementById("a_title").value = data.a_title;
+            document.getElementById("a_author").value = data.a_author;
+            document.getElementById("a_books_isbn").value = data.a_books_isbn.toString();
+            if(!typeof data.a_description === undefined){
+                document.getElementById("a_description").value = data.a_description;
             }
         }
 
         static postBook(){
-            let book = new Book(
-                document.getElementById("a_title").value.toString(),
-                document.getElementById("a_author").value.toString(),
-                document.getElementById("a_publicationdate").value.toString(),
-                document.getElementById("a_books_isbn").value.toString(),
-                document.getElementById("a_description").value.toString());
+            let book = new Book();
 
-            // To-Do implement fetch for POST METHOD
+            fetch(postURL, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(book),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Book POST Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Book POST Error: ", error);
+                })
+        }
+
+        static putBook(){
+            let book = new Book();
+
+            let putURL = postURL + "/ID!!";
+
+            fetch(putURL, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(boardgame),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Book PUT Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Book PUT Error: ", error);
+                })
+        }
+
+        static deleteBook(){
+            let deleteURL = postURL + "/ID!!!";
+
+            fetch(deleteURL, {
+                method: "DELETE"
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Book DELETE Success: ", data);
+                })
+                .catch((error) =>{
+                    console.error("Book DELETE Error: ", error);
+                })
         }
     }
 
 
+
     let searchButton = document.getElementById("searchButton");
-    searchButton.addEventListener('click', searchInput,false);
+    searchButton.addEventListener('click', Book.getSearch,false);
 
     let createButton = document.getElementById("createButton");
     createButton.addEventListener('click', Book.postBook,false);
+    createButton.addEventListener('click', function(){
+        document.getElementById("createButton").disabled = true;
+    },false);
 
-    let updateButton = document.getElementById("updateButton").disabled = true;
-
+    let updateButton = document.getElementById("updateButton");
+    updateButton.disabled = true;
 });
