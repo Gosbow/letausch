@@ -20,7 +20,7 @@ var getJSON = function(url, callback) {
 }
 
 function logIn(){
-    // Get   the Creds!
+    // Get the Creds!
     let typedInUsername = document.getElementById("username").value;
     let typedInPassword = document.getElementById("password").value;
 
@@ -39,42 +39,8 @@ function logIn(){
                 } else {
                     document.getElementById("messages").innerHTML = "Falsche Credentials!"
                 }
-
-                /*
-                var password = mydata.u_password;
-
-                document.getElementById("teil1").innerHTML = mydata.teil1;
-                document.getElementById("vokabel").setAttribute("placeholder", mydata.vokabelD);
-                document.getElementById("teil2").innerHTML = mydata.teil2;
-                 */
             }
         });
     }
-
-
-    /*
-    // Static Uname!
-    let username = "romano@mimimi.at";
-    let password = "NotThi$Time!";
-    let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-    if(!mailformat.test(typedInUsername))
-    {
-        document.getElementById("messages").innerHTML = "Bitte geben Sie Ihre E-Mail Adresse an!";
-    } else if(typedInUsername === username && typedInPassword === password)
-    {
-        window.open("browse.html", "_self");
-
-    }else{
-        counter--;
-        document.getElementById("messages").innerHTML="Eingabe falsch!";
-        if(counter == 0){
-            alert("Sorry, wird geschlossen. Bekomme deine Creds oder bleib draussen!");
-            window.close();
-        }
-    }
-
-     */
-
 }
 
