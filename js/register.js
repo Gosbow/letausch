@@ -1,3 +1,12 @@
+function postRegData(uname, pw, fn, ln, tel){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://letausch.ffkledering.at:3000/users/", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify({
+        "u_email": uname, "u_pw": pw, "u_firstname": fn, "u_tel":tel, "u_lastname":ln
+    }));
+}
+
 function submitPersonalData() {
 
     var uname = document.getElementById("username").value;
@@ -11,7 +20,7 @@ function submitPersonalData() {
         document.getElementById("messages").innerHTML = "Bitte füllen Sie alle Pflichtfelder aus!";
     } else{
         postRegData(uname, pw, fn, ln, tel);
-        window.open("../browse.html", "_self");
+        document.getElementById("messages").innerHTML = "Registrierung erfolgreich! Bitte loggen Sie sich ein!";
     }
 }
 
@@ -23,15 +32,11 @@ function register(){
 
     document.getElementById("loginregistermessage").innerHTML = "Bitte um Angabe Ihrer Daten!"
 
-    var login = document.getElementById("login");
-    login.setAttribute("onclick", "back()");
-
     var firstname = document.createElement("input");
     var lastname = document.createElement("input");
     var tel = document.createElement("input");
     var datasep = document.createElement("BR");
     var datasep2 = document.createElement("BR");
-
 
     document.getElementById("newfields").appendChild(firstname);
     document.getElementById("newfields").appendChild(lastname);
@@ -40,17 +45,22 @@ function register(){
     document.getElementById("newfields").appendChild(datasep2);
 
     tel.setAttribute("placeholder", "Telefonnummer (optional)");
-    tel.setAttribute("required", "");
+    tel.required = true;
+    tel.setAttribute("id", "tel");
     tel.setAttribute("type", "tel");
 
     firstname.setAttribute("placeholder", "Vorname");
-    firstname.setAttribute("required", "");
+    firstname.required = true;
+    firstname.setAttribute("id", "firstname");
 
     lastname.setAttribute("placeholder", "Nachname");
-    lastname.setAttribute("required", "");
+    lastname.required = true;
+    lastname.setAttribute("id", "lastname");
+
+    var login = document.getElementById("login");
+    login.setAttribute("onclick", "back()");
 
     var submit = document.getElementById("register");
-
     submit.setAttribute("onclick", "submitPersonalData()")
 }
 

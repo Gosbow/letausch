@@ -1,5 +1,3 @@
-let counter = 3;
-
 var getJSON = function(url, callback) {
 
     var xhr = new XMLHttpRequest();
