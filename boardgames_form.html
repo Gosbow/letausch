@@ -4,18 +4,36 @@
   <meta charset="UTF-8">
   <meta content="Hami Singh, Bernhard Vogler, Roman Schuller" name="Author">
   <meta content="LeTausch Website" name="description">
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="js/bgames.js"></script>
+
+  <link rel="stylesheet" href="designs/articles.css">
+  <link rel="stylesheet" href="designs/template.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <title>Add new board game</title>
-  <script src="../js/bgames.js"></script>
 </head>
 
-
 <body>
-  <div id=bgames>
+<header id="nav-placeholder"></header>
+
+<script>
+  $(function(){
+    $("#nav-placeholder").load("template.html");
+  });
+</script>
+
+<div>
+  <main id="mainSite"></main>
+  <section id="bgames_form">
     <h2>Add new board game</h2>
     <label for="searchField"><input type="text" id="searchField" name="searchField" placeholder="Search.."></label>
     <button id="searchButton">Search</button>
     <br><br>
-    <label for="a_imageurl"><img src="" id="a_imageurl" alt="Article image" width="400" height="400"></label><br>
+    <label for="a_imageurl"><img src="" id="a_imageurl" alt="Article image"></label><br>
     <label for="a_title">Title <input type="text" id="a_title"></label><br>
     <label for="a_author">Designer <input type="text" id="a_author"></label><br>
     <label for="a_genre">Genre <input type="text" id="a_genre"></label><br>
@@ -24,6 +42,9 @@
     <label for="a_description">Description <input type="text" id="a_description"></label><br>
     <button id="createButton">Create</button>
     <button id="updateButton">Update</button>
-  </div>
+  </section>
+</div>
+
 </body>
+<footer id="footer"></footer>
 </html>

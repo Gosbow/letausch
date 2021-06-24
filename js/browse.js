@@ -38,16 +38,35 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
         }
 
-        displayAll(){
+        displayAll() {
+            let path = window.location.pathname;
+            let page = path.split("/").pop();
+            console.log(page);
+
             let data = display.articles;
             display.displayNone();
-            for(let j = 0; j < data.length; j++){
-                if(data[j].a_category === "Boardgame" || data[j].a_category === "Videogame" ||
-                    data[j].a_category === "Book" || data[j].a_category === "Other"){
+            for (let j = 0; j < data.length; j++) {
+                if (page === "browse.html") {
+                    if (data[j].a_category === "Boardgame" || data[j].a_category === "Videogame" ||
+                        data[j].a_category === "Book" || data[j].a_category === "Other") {
+                        display.displayArticle(data[j]);
+                    }
+                }
+                if (page === "boardgames.html" && data[j].a_category === "Boardgame") {
+                    display.displayArticle(data[j]);
+                }
+                if (page === "videogames.html" && data[j].a_category === "Videogame") {
+                    display.displayArticle(data[j]);
+                }
+                if (page === "books.html" && data[j].a_category === "Book") {
+                    display.displayArticle(data[j]);
+                }
+                if (page === "others.html" && data[j].a_category === "Other") {
                     display.displayArticle(data[j]);
                 }
             }
         }
+
 
         displayNone(){
             for(let i = 0; i < display.articles.length; i++){
@@ -321,25 +340,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     let display = new mainDisplay();
-
-    // let bgameLink = document.getElementById("cat_bgames");
-    // bgameLink.addEventListener('click', function(){
-    //     console.log("TEST");
-    // }, false);
-    //
-    // let vgameLink = document.getElementById("cat_vgames");
-    // vgameLink.addEventListener('click', function(){
-    //
-    // }, false);
-    //
-    // let bookLink = document.getElementById("cat_books");
-    // bookLink.addEventListener('click', function(){
-    //
-    // }, false);
-    //
-    // let otherLink = document.getElementById("cat_other");
-    // otherLink.addEventListener('click', function(){
-    //
-    // }, false);
-
 });
