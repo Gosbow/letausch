@@ -23,35 +23,103 @@ document.addEventListener("DOMContentLoaded", function (event) {
     class mainDisplay {
         constructor() {
             this.articleDisplay = document.getElementById("articleDisplay");
-            let articles = [];
+            this.articles = [];
+            this.chosenArticle = 0;
 
             fetch(getURL)
                 .then(function(response){
                     response.json()
                         .then(function(json){
                             for(let i = 0; i < json.length; i++){
-                                articles.push(new Article(json[i]));
+                                display.articles.push(new Article(json[i]));
                             }
-                            display.displayAll(articles);
+                            display.displayAll();
                         })
                 })
         }
 
-        displayAll(data){
+        displayAll(){
+            let data = display.articles;
+            display.displayNone();
             for(let j = 0; j < data.length; j++){
-                if(data[j].a_category === "Boardgame"){
-                    display.displayBoardGame(data[j]);
-                }
-                if(data[j].a_category === "Videogame"){
-                    display.displayVideoGame(data[j]);
-                }
-                if(data[j].a_category === "Book"){
-                    display.displayBook(data[j]);
-                }
-                if(data[j].a_category === "Other"){
-                    display.displayOther(data[j]);
+                if(data[j].a_category === "Boardgame" || data[j].a_category === "Videogame" ||
+                    data[j].a_category === "Book" || data[j].a_category === "Other"){
+                    display.displayArticle(data[j]);
                 }
             }
+        }
+
+        displayNone(){
+            for(let i = 0; i < display.articles.length; i++){
+                if(document.getElementById(display.articles[i].a_id)) {
+                    display.articleDisplay.removeChild(document.getElementById(display.articles[i].a_id));
+                }
+            }
+        }
+
+        displayDetailView(id){
+            display.displayNone();
+            for(let i = 0; i < display.articles.length; i++){
+                if(id === display.articles[i].a_id){
+                    if(display.articles[i].a_category === "Boardgame"){
+                        display.displayBoardGame(display.articles[i]);
+                    }
+                    if(display.articles[i].a_category === "Videogame"){
+                        display.displayVideoGame(display.articles[i]);
+                    }
+                    if(display.articles[i].a_category === "Book"){
+                        display.displayBook(display.articles[i]);
+                    }
+                    if(display.articles[i].a_category === "Other"){
+                        display.displayOther(display.articles[i]);
+                    }
+                }
+            }
+        }
+
+        displayArticle(data){
+            let article = document.createElement("article");
+            article.setAttribute("class","articles");
+            article.id = data.a_id;
+
+            let imageLink = document.createElement("a");
+            imageLink.id ="image_link_id_"+data.a_id;
+            imageLink.href = '#';
+            imageLink.addEventListener('click', function(){
+                display.chosenArticle = data.a_id
+                console.log(display.chosenArticle);
+                display.displayDetailView(display.chosenArticle);
+            }, false);
+
+            let image = document.createElement("img");
+            image.src = data.a_imageurl;
+            image.alt = data.a_title + " cover/artwork";
+            imageLink.appendChild(image)
+            article.appendChild(imageLink);
+
+            let titleLink = document.createElement("a");
+            titleLink.id ="title_link_id"+data.a_id;
+            titleLink.href = '#';
+            titleLink.addEventListener('click', function(){
+                display.chosenArticle = data.a_id
+                console.log(display.chosenArticle);
+                display.displayDetailView(display.chosenArticle);
+            }, false);
+
+            let title = document.createElement("h2");
+            title.innerHTML = data.a_title;
+            titleLink.appendChild(title);
+            article.appendChild(titleLink);
+
+            let cat = document.createElement("p");
+            cat.innerHTML = "Category: " + data.a_category;
+            article.appendChild(cat);
+
+            let pub = document.createElement("p");
+            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            article.appendChild(pub);
+
+            display.articleDisplay.appendChild(article);
         }
 
         displayBoardGame(data){
@@ -98,6 +166,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
             desc.innerHTML = "Description: " + data.a_description;
             article.appendChild(desc);
 
+            let backButton = document.createElement("button");
+            backButton.innerHTML = "Back";
+            backButton.addEventListener('click', display.displayAll, false);
+            article.appendChild(backButton);
+
+            let requestButton = document.createElement("button");
+            requestButton.innerHTML = "Request Trade";
+            article.appendChild(requestButton);
+
             display.articleDisplay.appendChild(article);
         }
 
@@ -141,6 +218,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
             desc.innerHTML = "Description: " + data.a_description;
             article.appendChild(desc);
 
+            let backButton = document.createElement("button");
+            backButton.innerHTML = "Back";
+            backButton.addEventListener('click', display.displayAll, false);
+            article.appendChild(backButton);
+
+            let requestButton = document.createElement("button");
+            requestButton.innerHTML = "Request Trade";
+            article.appendChild(requestButton);
+
             display.articleDisplay.appendChild(article);
         }
 
@@ -180,6 +266,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
             desc.innerHTML = "Description: " + data.a_description;
             article.appendChild(desc);
 
+            let backButton = document.createElement("button");
+            backButton.innerHTML = "Back";
+            backButton.addEventListener('click', display.displayAll, false);
+            article.appendChild(backButton);
+
+            let requestButton = document.createElement("button");
+            requestButton.innerHTML = "Request Trade";
+            article.appendChild(requestButton);
+
             display.articleDisplay.appendChild(article);
         }
 
@@ -211,10 +306,40 @@ document.addEventListener("DOMContentLoaded", function (event) {
             desc.innerHTML = "Description: " + data.a_description;
             article.appendChild(desc);
 
+            let backButton = document.createElement("button");
+            backButton.innerHTML = "Back";
+            backButton.addEventListener('click', display.displayAll, false);
+            article.appendChild(backButton);
+
+            let requestButton = document.createElement("button");
+            requestButton.innerHTML = "Request Trade";
+            article.appendChild(requestButton);
+
             display.articleDisplay.appendChild(article);
         }
 
     }
 
     let display = new mainDisplay();
+
+    // let bgameLink = document.getElementById("cat_bgames");
+    // bgameLink.addEventListener('click', function(){
+    //     display.displayNone();
+    // }, false);
+    //
+    // let vgameLink = document.getElementById("cat_vgames");
+    // vgameLink.addEventListener('click', function(){
+    //
+    // }, false);
+    //
+    // let bookLink = document.getElementById("cat_books");
+    // bookLink.addEventListener('click', function(){
+    //
+    // }, false);
+    //
+    // let otherLink = document.getElementById("cat_other");
+    // otherLink.addEventListener('click', function(){
+    //
+    // }, false);
+
 });
