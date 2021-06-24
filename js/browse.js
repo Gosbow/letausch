@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const getURL = "http://localhost:3000/article";
+    // const getURL = "http://letausch.ffkledering.at:3000/article";
 
     class Article{
         constructor(data) {
@@ -45,18 +46,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     display.displayVideoGame(data[j]);
                 }
                 if(data[j].a_category === "Book"){
-                    // display.displayBook(data[j]);
+                    display.displayBook(data[j]);
                 }
                 if(data[j].a_category === "Other"){
-                    // display.displayOther(data[j]);
+                    display.displayOther(data[j]);
                 }
             }
         }
 
         displayBoardGame(data){
             let article = document.createElement("article");
-            article.class = "articles";
-            article.id = data.id;
+            article.setAttribute("class","articles");
+            article.id = data.a_id;
 
             let image = document.createElement("img");
             image.src = data.a_imageurl;
@@ -102,8 +103,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         displayVideoGame(data){
             let article = document.createElement("article");
-            article.class = "articles";
-            article.id = data.id;
+            article.setAttribute("class","articles");
+            article.id = data.a_id;
 
             let image = document.createElement("img");
             image.src = data.a_imageurl;
@@ -143,48 +144,75 @@ document.addEventListener("DOMContentLoaded", function (event) {
             display.articleDisplay.appendChild(article);
         }
 
-        // displayBook(data){
-        //     let article = document.createElement("article");
-        //     article.class = "articles";
-        //     article.id = data.id;
-        //
-        //     let image = document.createElement("img");
-        //     image.src = data.a_imageurl;
-        //     image.alt = data.a_title + " cover/artwork";
-        //     article.appendChild(image);
-        //
-        //     let title = document.createElement("a");
-        //     let titleText = document.createElement("h2");
-        //     titleText.innerHTML = data.a_title;
-        //     title.appendChild(titleText);
-        //     article.appendChild(title);
-        //
-        //     let cat = document.createElement("p");
-        //     cat.innerHTML = "Category: " + data.a_category;
-        //     article.appendChild(cat);
-        //
-        //     let pub = document.createElement("p");
-        //     pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
-        //     article.appendChild(pub);
-        //
-        //     let genre = document.createElement("p");
-        //     genre.innerHTML = "Genre: " + data.a_genre;
-        //     article.appendChild(genre);
-        //
-        //     let players = document.createElement("p");
-        //     players.innerHTML = "Players: " + data.a_bgame_players;
-        //     article.appendChild(players);
-        //
-        //     let playtime = document.createElement("p");
-        //     playtime.innerHTML = "Playing Time: " + data.a_bgame_playtime;
-        //     article.appendChild(playtime);
-        //
-        //     let desc = document.createElement("p");
-        //     desc.innerHTML = "Description: " + data.a_description;
-        //     article.appendChild(desc);
-        //
-        //     display.articleDisplay.appendChild(article);
-        // }
+        displayBook(data){
+            let article = document.createElement("article");
+            article.setAttribute("class","articles");
+            article.id = data.a_id;
+
+            let image = document.createElement("img");
+            image.src = data.a_imageurl;
+            image.alt = data.a_title + " cover/artwork";
+            article.appendChild(image);
+
+            let title = document.createElement("a");
+            let titleText = document.createElement("h2");
+            titleText.innerHTML = data.a_title;
+            title.appendChild(titleText);
+            article.appendChild(title);
+
+            let cat = document.createElement("p");
+            cat.innerHTML = "Category: " + data.a_category;
+            article.appendChild(cat);
+
+            let pub = document.createElement("p");
+            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            article.appendChild(pub);
+
+            let auth = document.createElement("p");
+            auth.innerHTML = "Author: " + data.a_author;
+            article.appendChild(auth);
+
+            let isbn = document.createElement("p");
+            isbn.innerHTML = "ISBN: " + data.a_books_isbn;
+            article.appendChild(isbn);
+
+            let desc = document.createElement("p");
+            desc.innerHTML = "Description: " + data.a_description;
+            article.appendChild(desc);
+
+            display.articleDisplay.appendChild(article);
+        }
+
+        displayOther(data){
+            let article = document.createElement("article");
+            article.setAttribute("class","articles");
+            article.id = data.a_id;
+
+            let image = document.createElement("img");
+            image.src = data.a_imageurl;
+            image.alt = data.a_title + " cover/artwork";
+            article.appendChild(image);
+
+            let title = document.createElement("a");
+            let titleText = document.createElement("h2");
+            titleText.innerHTML = data.a_title;
+            title.appendChild(titleText);
+            article.appendChild(title);
+
+            let cat = document.createElement("p");
+            cat.innerHTML = "Category: " + data.a_category;
+            article.appendChild(cat);
+
+            let pub = document.createElement("p");
+            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            article.appendChild(pub);
+
+            let desc = document.createElement("p");
+            desc.innerHTML = "Description: " + data.a_description;
+            article.appendChild(desc);
+
+            display.articleDisplay.appendChild(article);
+        }
 
     }
 

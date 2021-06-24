@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/ol/";
     const postURL = "http://localhost:3000/article";
+    // const searchURL = "http://letausch.ffkledering.at:3000/webapi/ol/";
+    // const postURL = "http://letausch.ffkledering.at:3000/article";
 
     let createTrue = true;
 
@@ -10,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
+            this.a_imageurl = "img/book_placeholder.jpg";
 
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Book";

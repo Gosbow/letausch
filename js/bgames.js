@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://localhost:3000/webapi/bgg/";
     const postURL = "http://localhost:3000/article";
+    // const searchURL = "http://letausch.ffkledering.at:3000/webapi/bgg/";
+    // const postURL = "http://letausch.ffkledering.at:3000/article";
 
     let createTrue = true;
 

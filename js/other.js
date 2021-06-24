@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const postURL = "http://localhost:3000/article";
+    // const postURL = "http://letausch.ffkledering.at:3000/article";
 
     let createTrue = true;
 
     class Other{
         constructor(data) {
             this.a_title = document.getElementById("a_title").value;
-            this.a_description = document.getElementById("a_description").description;
+            this.a_description = document.getElementById("a_description").value;
+            this.a_imageurl = "img/other_placeholder.jpg";
+
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Other";
         }
