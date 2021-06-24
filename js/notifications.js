@@ -12,20 +12,22 @@ function loadPosts(){
     var status = 0;
 
     var article = document.createElement("article");
-    article.setAttribute("id", "atricle")
+    article.setAttribute("id", "atricle");
 
     var notificationaction = document.createElement("button");
 
     // <USER A> möchte gerne <TITLE B> eintauschen.                      <Eintauschen> --> POP UP mit Artikel von A wählen
     // <USER B> möchte gerne <TITLE A> gegen <TITLE B> mit dir tauschen. <Annehmen>    --> POP UP "warten auf bestätigung von A"
+    // <USER B> hat den Tasuch <TITEL B> gegen <TITEL A> bestätigt.      <Kontaktdaten>--> POP UP Kontaktdaten
     // <USER A> hat den Tasuch <TITEL B> gegen <TITEL A> bestätigt.      <Kontaktdaten>--> POP UP Kontaktdaten
+
     var notification = document.createElement("p");
 
 
     if(status == 0){
         notification.innerHTML = "$userA möchte gerne <TITLE B> eintauschen."; // add as defined
         notificationaction.innerHTML = "Eintasuchen";
-        notificationaction.setAttribute("onclick", "eintasuchen()");
+        notificationaction.setAttribute("onclick", "eintauschen()");
     }
     if(status == 1){
         notification.innerHTML = "<USER B> möchte gerne <TITLE A> gegen <TITLE B> mit dir tauschen."; // add as defined

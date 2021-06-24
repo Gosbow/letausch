@@ -1,18 +1,16 @@
 function submitPersonalData() {
 
-    if(document.getElementById("username").value == "" ||
-        document.getElementById("password").value == "" ||
-        document.getElementById("firstname").value == "" ||
-        document.getElementById("lastname").value == ""
-    )
+    var uname = document.getElementById("username").value;
+    var pw = document.getElementById("password").value;
+    var fn = document.getElementById("firstname").value;
+    var ln = document.getElementById("lastname").value;
+    var tel = document.getElementById("tel").value;
+
+    if(uname == "" ||pw == "" || fn == "" || ln == "")
     {
         document.getElementById("messages").innerHTML = "Bitte füllen Sie alle Pflichtfelder aus!";
     } else{
-        // PUSH USERNAME
-        // PUSH PASSWORD
-        // PUSH FIRSTNAME
-        // PUSH LASTNAME
-
+        postRegData(uname, pw, fn, ln, tel);
         window.open("../browse.html", "_self");
     }
 }
@@ -43,7 +41,7 @@ function register(){
 
     tel.setAttribute("placeholder", "Telefonnummer (optional)");
     tel.setAttribute("required", "");
-    tel.setAttribute("type", "tel")
+    tel.setAttribute("type", "tel");
 
     firstname.setAttribute("placeholder", "Vorname");
     firstname.setAttribute("required", "");
