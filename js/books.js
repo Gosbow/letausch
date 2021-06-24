@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
 
         static printData(data){
-            document.getElementById("a_imageurl").setAttribute("src","../img/book_placeholder.jpg");
+            document.getElementById("a_imageurl").setAttribute("src","img/book_placeholder.jpg");
             document.getElementById("a_title").value = data.a_title;
             document.getElementById("a_author").value = data.a_author;
             document.getElementById("a_books_isbn").value = data.a_books_isbn.toString();
