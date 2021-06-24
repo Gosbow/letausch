@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_publicationdate = data.a_publicationdate;
             this.a_genre = data.a_genre;
             this.a_author = data.a_author;
-            this.a_vgame_plattform = data.a_vgame_plattform;
+            this.a_vgame_platform = data.a_vgame_platform;
             this.a_bgame_players = data.a_bgame_players;
             this.a_bgame_playtime = data.a_bgame_playtime;
             this.a_books_isbn = data.a_books_isbn;
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(auth);
 
             let platform = document.createElement("p");
-            platform.innerHTML = "Platform: " + data.a_vgame_plattform;
+            platform.innerHTML = "Platform: " + data.a_vgame_platform;
             article.appendChild(platform);
 
             let genre = document.createElement("p");
@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // let bgameLink = document.getElementById("cat_bgames");
     // bgameLink.addEventListener('click', function(){
-    //     display.displayNone();
+    //     console.log("TEST");
     // }, false);
     //
     // let vgameLink = document.getElementById("cat_vgames");

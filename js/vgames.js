@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         constructor() {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
-            this.a_vgame_plattform = document.getElementById("a_vgame_platform").value.toString();
+            this.a_vgame_platform = document.getElementById("a_vgame_platform").value.toString();
             this.a_genre = document.getElementById("a_genre").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
@@ -50,9 +50,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("a_description").value = data.a_description;
             document.getElementById("a_imageurl").setAttribute("src", data.a_imageurl);
             let datalist = document.getElementById("a_vgame_platform");
-            for(let i = 0; i < data.a_vgame_plattform.length; i++) {
+            for(let i = 0; i < data.a_vgame_platform.length; i++) {
                 let option = document.createElement("option");
-                option.value = data.a_vgame_plattform[i]
+                option.value = data.a_vgame_platform[i]
                 datalist.appendChild(option);
             }
         }
