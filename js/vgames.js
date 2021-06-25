@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_genre = document.getElementById("a_genre").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
-
-            this.a_publicationdate = new Date().toISOString();
+            let publicationdate = new Date().toISOString();
+            publicationdate = publicationdate.replace("T", " ");
+            publicationdate = publicationdate.replace("Z", "");
+            this.a_publicationdate = publicationdate;
             this.a_category = "Videogame";
         }
 
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 .then(function(response){
                     response.json()
                         .then(function(json){
+                            console.log(json);
                             VideoGame.printData(json);
                         })
                 })
@@ -50,6 +53,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
             input.id = "a_vgame_platform";
             platform.removeChild(document.getElementById("a_vgame_platform"));
             platform.appendChild(input);
+            if(document.getElementById("removeButton")){
+                document.getElementById("platform_button").removeChild(document.getElementById("removeButton"));
+            }
         }
 
         static printData(data){
@@ -78,9 +84,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 removeButton.id = "removeButton";
                 removeButton.addEventListener('click', VideoGame.removePlatformSelect, false);
                 removeButton.addEventListener('click', function(){
-                    document.getElementById("platform").removeChild(document.getElementById("removeButton"));
+                    document.getElementById("platform_button").removeChild(document.getElementById("removeButton"));
                 }, false);
-                platform.appendChild(removeButton);
+                document.getElementById("platform_button").appendChild(removeButton);
             }
             else if(data.a_vgame_platform.length === 1){
                 document.getElementById("a_vgame_platform").value = data.a_vgame_platform[0];
@@ -149,11 +155,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
     searchButton.addEventListener('click', VideoGame.getSearch,false);
 
     let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', VideoGame.postVideoGame,false);
-    createButton.addEventListener('click', VideoGame.clearSearch,false);
-    createButton.addEventListener('click',function(){
-        document.getElementById("message").innerHTML = "Trade offer created successfully!";
+    createButton.addEventListener('click', function(){
+        if(document.getElementById("a_title").value === ""){
+            document.getElementById("message").innerHTML = "Please enter a title!";
+        }
+        else{
+            VideoGame.postVideoGame();
+            VideoGame.clearSearch();
+            document.getElementById("message").innerHTML = "Trade offer created successfully!";
+        }
     },false);
+
 
     let updateButton = document.getElementById("updateButton");
     updateButton.disabled = true;

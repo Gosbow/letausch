@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_title = document.getElementById("a_title").value;
             this.a_description = document.getElementById("a_description").value;
             this.a_imageurl = "img/other_placeholder.jpg";
-
-            this.a_publicationdate = new Date().toISOString();
+            let publicationdate = new Date().toISOString();
+            publicationdate = publicationdate.replace("T", " ");
+            publicationdate = publicationdate.replace("Z", "");
+            this.a_publicationdate = publicationdate;
             this.a_category = "Other";
         }
 
@@ -82,10 +84,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', Other.postOther,false);
-    createButton.addEventListener('click', Other.clearData,false);
-    createButton.addEventListener('click',function(){
-        document.getElementById("message").innerHTML = "Trade offer created successfully!";
+    createButton.addEventListener('click', function(){
+        if(document.getElementById("a_title").value === ""){
+            document.getElementById("message").innerHTML = "Please enter a title!";
+        }
+        else{
+            Other.postOther();
+            Other.clearSearch();
+            document.getElementById("message").innerHTML = "Trade offer created successfully!";
+        }
     },false);
 
     let updateButton = document.getElementById("updateButton");

@@ -13,8 +13,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = "img/book_placeholder.jpg";
-
-            this.a_publicationdate = new Date().toISOString();
+            let publicationdate = new Date().toISOString();
+            publicationdate = publicationdate.replace("T", " ");
+            publicationdate = publicationdate.replace("Z", "");
+            this.a_publicationdate = publicationdate;
             this.a_category = "Book";
         }
 
@@ -113,10 +115,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
     searchButton.addEventListener('click', Book.getSearch,false);
 
     let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', Book.postBook,false);
-    createButton.addEventListener('click', Book.clearSearch,false);
-    createButton.addEventListener('click',function(){
-        document.getElementById("message").innerHTML = "Trade offer created successfully!";
+    createButton.addEventListener('click', function(){
+        if(document.getElementById("a_title").value === ""){
+            document.getElementById("message").innerHTML = "Please enter a title!";
+        }
+        else{
+            Book.postBook();
+            Book.clearSearch();
+            document.getElementById("message").innerHTML = "Trade offer created successfully!";
+        }
     },false);
 
     let updateButton = document.getElementById("updateButton");
