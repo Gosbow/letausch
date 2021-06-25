@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    const getURL = "http://localhost:3000/article";
-    // const getURL = "http://letausch.ffkledering.at:3000/article";
+    // const getURL = "http://localhost:3000/article";
+    const getURL = "http://letausch.ffkledering.at:3000/article";
 
     class Article{
         constructor(data) {

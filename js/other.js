@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    const postURL = "http://localhost:3000/article";
-    // const postURL = "http://letausch.ffkledering.at:3000/article";
+    // const postURL = "http://localhost:3000/article";
+    const postURL = "http://letausch.ffkledering.at:3000/article";
 
     let createTrue = true;
 
@@ -12,6 +12,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Other";
+        }
+
+        static clearData(){
+            document.getElementById("a_title").value = "";
+            document.getElementById("a_description").value = "";
+            document.getElementById("message").innerHTML = "";
         }
 
         static printData(data){
@@ -77,8 +83,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     let createButton = document.getElementById("createButton");
     createButton.addEventListener('click', Other.postOther,false);
-    createButton.addEventListener('click', function(){
-        document.getElementById("createButton").disabled = true;
+    createButton.addEventListener('click', Other.clearData,false);
+    createButton.addEventListener('click',function(){
+        document.getElementById("message").innerHTML = "Trade offer created successfully!";
     },false);
 
     let updateButton = document.getElementById("updateButton");

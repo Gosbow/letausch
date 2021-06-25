@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    const searchURL = "http://localhost:3000/webapi/ol/";
-    const postURL = "http://localhost:3000/article";
-    // const searchURL = "http://letausch.ffkledering.at:3000/webapi/ol/";
-    // const postURL = "http://letausch.ffkledering.at:3000/article";
+    // const searchURL = "http://localhost:3000/webapi/ol/";
+    // const postURL = "http://localhost:3000/article";
+    const searchURL = "http://letausch.ffkledering.at:3000/webapi/ol/";
+    const postURL = "http://letausch.ffkledering.at:3000/article";
 
     let createTrue = true;
 
@@ -19,11 +19,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
 
         static getSearch(){
-            document.getElementById("a_title").value = "";
-            document.getElementById("a_author").value = "";
-            document.getElementById("a_books_isbn").value = "";
-            document.getElementById("a_description").value = "";
-            document.getElementById("a_imageurl").setAttribute("src","");
+            Book.clearSearch();
 
             let input = document.getElementById("searchField").value;
             console.log("GET to server: " + searchURL + input);
@@ -34,6 +30,15 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             Book.printData(json);
                         })
                 })
+        }
+
+        static clearSearch(){
+            document.getElementById("a_title").value = "";
+            document.getElementById("a_author").value = "";
+            document.getElementById("a_books_isbn").value = "";
+            document.getElementById("a_description").value = "";
+            document.getElementById("a_imageurl").setAttribute("src","");
+            document.getElementById("message").innerHTML = "";
         }
 
         static printData(data){
@@ -109,8 +114,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     let createButton = document.getElementById("createButton");
     createButton.addEventListener('click', Book.postBook,false);
-    createButton.addEventListener('click', function(){
-        document.getElementById("createButton").disabled = true;
+    createButton.addEventListener('click', Book.clearSearch,false);
+    createButton.addEventListener('click',function(){
+        document.getElementById("message").innerHTML = "Trade offer created successfully!";
     },false);
 
     let updateButton = document.getElementById("updateButton");
