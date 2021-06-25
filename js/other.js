@@ -9,14 +9,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_title = document.getElementById("a_title").value;
             this.a_description = document.getElementById("a_description").value;
             this.a_imageurl = "img/other_placeholder.jpg";
-            let publicationdate = new Date().toISOString();
-            publicationdate = publicationdate.replace("T", " ");
-            publicationdate = publicationdate.replace("Z", "");
-            this.a_publicationdate = publicationdate;
+            this.a_publicationdate = new Date().toISOString();
             this.a_category = "Other";
         }
 
-        static clearData(){
+        static clearSearch(){
             document.getElementById("a_title").value = "";
             document.getElementById("a_description").value = "";
             document.getElementById("message").innerHTML = "";
@@ -81,6 +78,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.error("Other Article DELETE Error: ", error);
                 })
         }
+
+        static getOtherByID(){
+            let getURL = articleURL + "/19";
+
+            console.log("GET to server: " + getURL);
+            fetch(getURL)
+                .then(function(response){
+                    response.json()
+                        .then(function(json){
+                            Other.printData(json);
+                        })
+                })
+        }
     }
 
     let createButton = document.getElementById("createButton");
@@ -94,7 +104,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("message").innerHTML = "Trade offer created successfully!";
         }
     },false);
-
-    let updateButton = document.getElementById("updateButton");
-    updateButton.disabled = true;
 });

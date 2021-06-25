@@ -13,10 +13,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = "img/book_placeholder.jpg";
-            let publicationdate = new Date().toISOString();
-            publicationdate = publicationdate.replace("T", " ");
-            publicationdate = publicationdate.replace("Z", "");
-            this.a_publicationdate = publicationdate;
+            this.a_publicationdate = new Date().toISOString();
             this.a_category = "Book";
         }
 
@@ -107,9 +104,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     console.error("Book DELETE Error: ", error);
                 })
         }
+
+        static getBookByID(){
+            let getURL = articleURL + "/ID";
+
+            console.log("GET to server: " + getURL);
+            fetch(getURL)
+                .then(function(response){
+                    response.json()
+                        .then(function(json){
+                            Book.printData(json);
+                        })
+                })
+        }
     }
-
-
 
     let searchButton = document.getElementById("searchButton");
     searchButton.addEventListener('click', Book.getSearch,false);
@@ -125,7 +133,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("message").innerHTML = "Trade offer created successfully!";
         }
     },false);
-
-    let updateButton = document.getElementById("updateButton");
-    updateButton.disabled = true;
 });

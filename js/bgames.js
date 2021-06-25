@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     // const searchURL = "http://localhost:3000/webapi/bgg/";
-    // const postURL = "http://localhost:3000/article";
+    // const articleURL = "http://localhost:3000/article";
     const searchURL = "http://letausch.ffkledering.at:3000/webapi/bgg/";
-    const postURL = "http://letausch.ffkledering.at:3000/article";
+    const articleURL = "http://letausch.ffkledering.at:3000/article";
 
     let createTrue = true;
 
@@ -15,10 +15,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_bgame_playtime = document.getElementById("a_bgame_playtime").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
-            let publicationdate = new Date().toISOString();
-            publicationdate = publicationdate.replace("T", " ");
-            publicationdate = publicationdate.replace("Z", "");
-            this.a_publicationdate = publicationdate;
+            this.a_publicationdate = new Date().toISOString();
             this.a_category = "Boardgame";
         }
 
@@ -62,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         static postBoardGame(){
             let boardgame = new BoardGame();
 
-            fetch(postURL, {
+            fetch(articleURL, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,39 +75,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
         }
 
-        static putBoardGame(){
-            let boardgame = new BoardGame();
+        static getBoardGameByID(){
+            let getURL = articleURL + "/19";
 
-            let putURL = postURL + "/ID!!";
-0
-            fetch(putURL, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(boardgame),
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log("Boardgame PUT Success: ", data);
-                })
-                .catch((error) =>{
-                    console.error("Boardgame PUT Error: ", error);
-                })
-        }
-
-        static deleteBoardGame(){
-            let deleteURL = postURL + "/ID!!!";
-
-            fetch(deleteURL, {
-                method: "DELETE"
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log("Boardgame DELETE Success: ", data);
-                })
-                .catch((error) =>{
-                    console.error("Boardgame DELETE Error: ", error);
+            console.log("GET to server: " + getURL);
+            fetch(getURL)
+                .then(function(response){
+                    response.json()
+                        .then(function(json){
+                            BoardGame.printData(json);
+                        })
                 })
         }
     }
@@ -129,7 +103,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("message").innerHTML = "Trade offer created successfully!";
         }
     },false);
-
-    let updateButton = document.getElementById("updateButton");
-    updateButton.disabled = true;
 });

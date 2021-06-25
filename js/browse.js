@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
             article.appendChild(pub);
 
             display.articleDisplay.appendChild(article);
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
             article.appendChild(pub);
 
             let auth = document.createElement("p");
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
             article.appendChild(pub);
 
             let auth = document.createElement("p");
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
             article.appendChild(pub);
 
             let auth = document.createElement("p");
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(data.a_publicationdate).toLocaleDateString();
+            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
             article.appendChild(pub);
 
             let desc = document.createElement("p");
