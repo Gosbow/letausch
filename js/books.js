@@ -4,17 +4,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://letausch.ffkledering.at:3000/webapi/ol/";
     const postURL = "http://letausch.ffkledering.at:3000/article";
 
-    let createTrue = true;
+    const user_ID = "bernhard@letausch.at";
 
     class Book{
-        constructor(data) {
+        constructor() {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = "img/book_placeholder.jpg";
             this.a_publicationdate = new Date().toISOString();
-            this.a_category = "Book";
+            this.a_category = "Books";
+            this.a_u_email = user_ID;
         }
 
         static getSearch(){
@@ -66,55 +67,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
                 .catch((error) =>{
                     console.error("Book POST Error: ", error);
-                })
-        }
-
-        static putBook(){
-            let book = new Book();
-
-            let putURL = postURL + "/ID!!";
-
-            fetch(putURL, {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(boardgame),
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log("Book PUT Success: ", data);
-                })
-                .catch((error) =>{
-                    console.error("Book PUT Error: ", error);
-                })
-        }
-
-        static deleteBook(){
-            let deleteURL = postURL + "/ID!!!";
-
-            fetch(deleteURL, {
-                method: "DELETE"
-            })
-                .then(response => response.text())
-                .then(data => {
-                    console.log("Book DELETE Success: ", data);
-                })
-                .catch((error) =>{
-                    console.error("Book DELETE Error: ", error);
-                })
-        }
-
-        static getBookByID(){
-            let getURL = articleURL + "/ID";
-
-            console.log("GET to server: " + getURL);
-            fetch(getURL)
-                .then(function(response){
-                    response.json()
-                        .then(function(json){
-                            Book.printData(json);
-                        })
                 })
         }
     }

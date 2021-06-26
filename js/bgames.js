@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://letausch.ffkledering.at:3000/webapi/bgg/";
     const articleURL = "http://letausch.ffkledering.at:3000/article";
 
-    let createTrue = true;
+    const user_ID = "bernhard@letausch.at";
 
     class BoardGame{
-        constructor(data) {
+        constructor() {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_genre = document.getElementById("a_genre").value.toString();
@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_description = document.getElementById("a_description").value.toString();
             this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
             this.a_publicationdate = new Date().toISOString();
-            this.a_category = "Boardgame";
+            this.a_category = "Board Games";
+            this.a_u_email = user_ID;
         }
 
         static getSearch(){
@@ -72,19 +73,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
                 .catch((error) =>{
                     console.error("Boardgame POST Error: ", error);
-                })
-        }
-
-        static getBoardGameByID(){
-            let getURL = articleURL + "/19";
-
-            console.log("GET to server: " + getURL);
-            fetch(getURL)
-                .then(function(response){
-                    response.json()
-                        .then(function(json){
-                            BoardGame.printData(json);
-                        })
                 })
         }
     }

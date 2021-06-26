@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // const getURL = "http://localhost:3000/article";
     const getURL = "http://letausch.ffkledering.at:3000/article";
 
+    const user_ID = "bernhard@letausch.at";
+
     class Article{
         constructor(data) {
             this.a_id = data.a_id;
@@ -47,18 +49,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
             display.displayNone();
             for (let j = 0; j < data.length; j++) {
                 if (page === "browse.html") {
-                    if (data[j].a_category === "Boardgame" || data[j].a_category === "Videogame" ||
-                        data[j].a_category === "Book" || data[j].a_category === "Other") {
+                    if (data[j].a_category === "Board Games" || data[j].a_category === "Video Games" ||
+                        data[j].a_category === "Books" || data[j].a_category === "Other") {
                         display.displayArticle(data[j]);
                     }
                 }
-                if (page === "boardgames.html" && data[j].a_category === "Boardgame") {
+                if (page === "boardgames.html" && data[j].a_category === "Board Games") {
                     display.displayArticle(data[j]);
                 }
-                if (page === "videogames.html" && data[j].a_category === "Videogame") {
+                if (page === "videogames.html" && data[j].a_category === "Video Games") {
                     display.displayArticle(data[j]);
                 }
-                if (page === "books.html" && data[j].a_category === "Book") {
+                if (page === "books.html" && data[j].a_category === "Books") {
                     display.displayArticle(data[j]);
                 }
                 if (page === "others.html" && data[j].a_category === "Other") {
@@ -80,13 +82,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
             display.displayNone();
             for(let i = 0; i < display.articles.length; i++){
                 if(id === display.articles[i].a_id){
-                    if(display.articles[i].a_category === "Boardgame"){
+                    if(display.articles[i].a_category === "Board Games"){
                         display.displayBoardGame(display.articles[i]);
                     }
-                    if(display.articles[i].a_category === "Videogame"){
+                    if(display.articles[i].a_category === "Video Games"){
                         display.displayVideoGame(display.articles[i]);
                     }
-                    if(display.articles[i].a_category === "Book"){
+                    if(display.articles[i].a_category === "Books"){
                         display.displayBook(display.articles[i]);
                     }
                     if(display.articles[i].a_category === "Other"){

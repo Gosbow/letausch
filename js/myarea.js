@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // const articleURL = "http://localhost:3000/article";
     const articleURL = "http://letausch.ffkledering.at:3000/article";
 
+    const user_ID = "bernhard@letausch.at";
+
     class Article{
         constructor(data) {
             this.a_id = data.a_id;
@@ -30,7 +32,43 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_description = a_description;
             this.a_imageurl = a_imageurl;
             this.a_publicationdate = a_publicationdate;
-            this.a_category = "Boardgame";
+            this.a_category = "Board Games";
+            this.a_u_email = user_ID;
+        }
+    }
+    class VideoGame {
+        constructor(a_title, a_author, a_vgame_platform, a_genre, a_description, a_imageurl, a_publicationdate) {
+            this.a_title = a_title;
+            this.a_author = a_author;
+            this.a_vgame_platform = a_vgame_platform;
+            this.a_genre = a_genre;
+            this.a_description = a_description;
+            this.a_imageurl = a_imageurl;
+            this.a_publicationdate = a_publicationdate;
+            this.a_category = "Video Games";
+            this.a_u_email = user_ID;
+        }
+    }
+    class Book {
+        constructor(a_title, a_author, a_books_isbn, a_description, a_imageurl, a_publicationdate) {
+            this.a_title = a_title;
+            this.a_author = a_author;
+            this.a_books_isbn = a_books_isbn;
+            this.a_description = a_description;
+            this.a_imageurl = a_imageurl;
+            this.a_publicationdate = a_publicationdate;
+            this.a_category = "Books";
+            this.a_u_email = user_ID;
+        }
+    }
+    class Other {
+        constructor(a_title, a_description, a_imageurl, a_publicationdate) {
+            this.a_title = a_title;
+            this.a_description = a_description;
+            this.a_imageurl = a_imageurl;
+            this.a_publicationdate = a_publicationdate;
+            this.a_category = "Other";
+            this.a_u_email = user_ID;
         }
     }
 
@@ -52,30 +90,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
         }
 
-        // displayNone(){
-        //     for(let i = 0; i < display.articles.length; i++){
-        //         if(document.getElementById("article_" + display.articles[i].a_id)) {
-        //             display.areaDisplay.removeChild(document.getElementById("article_" + display.articles[i].a_id));
-        //         }
-        //     }
-        // }
-
         displayAll() {
-            let data = display.articles.slice(7,8);         // SLICED FOR TESTING PURPOSES
-            // console.log(data);
-            // display.displayNone();
+            let data = display.articles;
             for (let j = 0; j < data.length; j++) {
-                if(data[j].a_category === "Boardgame"){
-                    display.displayBoardGame(data[j]);
-                }
-                if(data[j].a_category === "Videogame"){
-                    display.displayVideoGame(data[j]);
-                }
-                if(data[j].a_category === "Book"){
-                    display.displayBook(data[j]);
-                }
-                if(data[j].a_category === "Other"){
-                    display.displayOther(data[j]);
+                if(display.articles[j].a_u_email === user_ID){
+                    if(data[j].a_category === "Board Games"){
+                        display.displayBoardGame(data[j]);
+                    }
+                    if(data[j].a_category === "Video Games"){
+                        display.displayVideoGame(data[j]);
+                    }
+                    if(data[j].a_category === "Books"){
+                        display.displayBook(data[j]);
+                    }
+                    if(data[j].a_category === "Other"){
+                        display.displayOther(data[j]);
+                    }
                 }
             }
         }
@@ -89,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 .then(response => response.text())
                 .then(data => {
                     console.log("Article DELETE Success: ", data);
+                    window.location.reload();
                 })
                 .catch((error) =>{
                     console.error("Article DELETE Error: ", error);
@@ -136,7 +167,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            console.log(data.a_publicationdate);
             pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
             article.appendChild(pub);
 
@@ -213,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("a_bgame_playtime_input_" + data.a_id).value,
                     document.getElementById("a_description_input_" + data.a_id).value,
                     data.a_imageurl,
-                    data.a_publicationdate,
+                    data.a_publicationdate
                 );
                 console.log(boardgame);
                 display.putArticle(data.a_id, boardgame);
@@ -255,23 +285,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             desc.replaceChild(descInput, document.getElementById("a_description_value_" + data.a_id));
         }
 
-
-
-
-
-
-        // down below is not finished
-
-
-
-
-
-
-
-
-
-
-
         displayVideoGame(data){
             let article = document.createElement("article");
             article.setAttribute("class","articles");
@@ -297,31 +310,102 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(pub);
 
             let auth = document.createElement("p");
-            auth.innerHTML = "Developer: " + data.a_author;
+            let authValue = document.createElement("span");
+            authValue.innerHTML = data.a_author.toString();
+            authValue.id = "a_author_value_" + data.a_id;
+            auth.innerHTML = "Developer: "
+            auth.id = "a_author_" + data.a_id;
+            auth.appendChild(authValue);
             article.appendChild(auth);
 
             let platform = document.createElement("p");
-            platform.innerHTML = "Platform: " + data.a_vgame_platform;
+            let platformValue = document.createElement("span");
+            platformValue.innerHTML = data.a_vgame_platform.toString();
+            platformValue.id = "a_vgame_platform_value_" + data.a_id;
+            platform.innerHTML = "Platform: ";
+            platform.id = "a_vgame_platform_" + data.a_id;
+            platform.appendChild(platformValue);
             article.appendChild(platform);
 
             let genre = document.createElement("p");
-            genre.innerHTML = "Genre: " + data.a_genre;
+            let genreValue = document.createElement("span");
+            genreValue.innerHTML = data.a_genre.toString();
+            genreValue.id = "a_genre_value_" + data.a_id;
+            genre.innerHTML = "Genre: ";
+            genre.id = "a_genre_" + data.a_id;
+            genre.appendChild(genreValue);
             article.appendChild(genre);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
-            desc.id = "a_description_" + data.id;
+            let descValue = document.createElement("span");
+            descValue.innerHTML = data.a_description.toString();
+            descValue.id = "a_description_value_" + data.a_id;
+            desc.innerHTML = "Description: ";
+            desc.id = "a_description_" + data.a_id;
+            desc.appendChild(descValue);
             article.appendChild(desc);
 
-            let backButton = document.createElement("button");
-            backButton.innerHTML = "Edit Offer";
-            article.appendChild(backButton);
+            let editButton = document.createElement("button");
+            editButton.innerHTML = "Edit";
+            editButton.addEventListener('click', function(){
+                editButton.disabled = true;
+                saveButton.disabled = false;
+                display.editVideoGame(data.a_id, data);
+            }, false);
+            article.appendChild(editButton);
 
-            let requestButton = document.createElement("button");
-            requestButton.innerHTML = "Delete Offer";
-            article.appendChild(requestButton);
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener('click', function(){
+                display.deleteArticleByID(data.a_id);
+            }, false);
+            article.appendChild(deleteButton);
+
+            let saveButton = document.createElement("button");
+            saveButton.innerHTML = "Save";
+            saveButton.disabled = true;
+            saveButton.addEventListener('click', function () {
+                let videogame = new VideoGame(
+                    data.a_title,
+                    document.getElementById("a_author_input_" + data.a_id).value,
+                    document.getElementById("a_vgame_platform_input_" + data.a_id).value,
+                    document.getElementById("a_genre_input_" + data.a_id).value,
+                    document.getElementById("a_description_input_" + data.a_id).value,
+                    data.a_imageurl,
+                    data.a_publicationdate
+                );
+                console.log(videogame);
+                display.putArticle(data.a_id, videogame);
+            }, false);
+            article.appendChild(saveButton);
 
             display.areaDisplay.appendChild(article);
+        }
+
+        editVideoGame(id, data) {
+            let auth = document.getElementById("a_author_" + data.a_id);
+            let authInput = document.createElement("input");
+            authInput.id = "a_author_input_" + data.a_id;
+            authInput.value = data.a_author;
+            auth.replaceChild(authInput, document.getElementById("a_author_value_" + data.a_id));
+
+            let genre = document.getElementById("a_genre_" + data.a_id);
+            let genreInput = document.createElement("input");
+            genreInput.id = "a_genre_input_" + data.a_id;
+            genreInput.value = data.a_genre;
+            genre.replaceChild(genreInput, document.getElementById("a_genre_value_" + data.a_id));
+
+            let platform = document.getElementById("a_vgame_platform_" + data.a_id);
+            let platformInput = document.createElement("input");
+            platformInput.id = "a_vgame_platform_input_" + data.a_id;
+            platformInput.value = data.a_vgame_platform;
+            platform.replaceChild(platformInput, document.getElementById("a_vgame_platform_value_" + data.a_id));
+
+            let desc = document.getElementById("a_description_" + data.a_id);
+            let descInput = document.createElement("input");
+            descInput.id = "a_description_input_" + data.a_id;
+            descInput.value = data.a_description;
+            desc.replaceChild(descInput, document.getElementById("a_description_value_" + data.a_id));
         }
 
         displayBook(data){
@@ -349,27 +433,86 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(pub);
 
             let auth = document.createElement("p");
-            auth.innerHTML = "Author: " + data.a_author;
+            let authValue = document.createElement("span");
+            authValue.innerHTML = data.a_author.toString();
+            authValue.id = "a_author_value_" + data.a_id;
+            auth.innerHTML = "Author: "
+            auth.id = "a_author_" + data.a_id;
+            auth.appendChild(authValue);
             article.appendChild(auth);
 
             let isbn = document.createElement("p");
-            isbn.innerHTML = "ISBN: " + data.a_books_isbn;
+            let isbnValue = document.createElement("span");
+            isbnValue.innerHTML = data.a_books_isbn.toString();
+            isbnValue.id = "a_books_isbn_value_" + data.a_id;
+            isbn.innerHTML = "ISBN: ";
+            isbn.id = "a_books_isbn_" + data.a_id;
+            isbn.appendChild(isbnValue);
             article.appendChild(isbn);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
-            desc.id = "a_description_" + data.id;
+            let descValue = document.createElement("span");
+            descValue.innerHTML = data.a_description.toString();
+            descValue.id = "a_description_value_" + data.a_id;
+            desc.innerHTML = "Description: ";
+            desc.id = "a_description_" + data.a_id;
+            desc.appendChild(descValue);
             article.appendChild(desc);
 
-            let backButton = document.createElement("button");
-            backButton.innerHTML = "Edit Offer";
-            article.appendChild(backButton);
+            let editButton = document.createElement("button");
+            editButton.innerHTML = "Edit";
+            editButton.addEventListener('click', function(){
+                editButton.disabled = true;
+                saveButton.disabled = false;
+                display.editBook(data.a_id, data);
+            }, false);
+            article.appendChild(editButton);
 
-            let requestButton = document.createElement("button");
-            requestButton.innerHTML = "Delete Offer";
-            article.appendChild(requestButton);;
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener('click', function(){
+                display.deleteArticleByID(data.a_id);
+            }, false);
+            article.appendChild(deleteButton);
+
+            let saveButton = document.createElement("button");
+            saveButton.innerHTML = "Save";
+            saveButton.disabled = true;
+            saveButton.addEventListener('click', function () {
+                let book = new Book(
+                    data.a_title,
+                    document.getElementById("a_author_input_" + data.a_id).value,
+                    document.getElementById("a_books_isbn_input_" + data.a_id).value,
+                    document.getElementById("a_description_input_" + data.a_id).value,
+                    data.a_imageurl,
+                    data.a_publicationdate
+                );
+                console.log(book);
+                display.putArticle(data.a_id, book);
+            }, false);
+            article.appendChild(saveButton);
 
             display.areaDisplay.appendChild(article);
+        }
+
+        editBook(id, data) {
+            let auth = document.getElementById("a_author_" + data.a_id);
+            let authInput = document.createElement("input");
+            authInput.id = "a_author_input_" + data.a_id;
+            authInput.value = data.a_author;
+            auth.replaceChild(authInput, document.getElementById("a_author_value_" + data.a_id));
+
+            let isbn = document.getElementById("a_books_isbn_" + data.a_id);
+            let isbnInput = document.createElement("input");
+            isbnInput.id = "a_books_isbn_input_" + data.a_id;
+            isbnInput.value = data.a_books_isbn;
+            isbn.replaceChild(isbnInput, document.getElementById("a_books_isbn_value_" + data.a_id));
+
+            let desc = document.getElementById("a_description_" + data.a_id);
+            let descInput = document.createElement("input");
+            descInput.id = "a_description_input_" + data.a_id;
+            descInput.value = data.a_description;
+            desc.replaceChild(descInput, document.getElementById("a_description_value_" + data.a_id));
         }
 
         displayOther(data){
@@ -397,27 +540,60 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(pub);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
-            desc.id = "a_description_" + data.id;
+            let descValue = document.createElement("span");
+            descValue.innerHTML = data.a_description.toString();
+            descValue.id = "a_description_value_" + data.a_id;
+            desc.innerHTML = "Description: ";
+            desc.id = "a_description_" + data.a_id;
+            desc.appendChild(descValue);
             article.appendChild(desc);
 
-            let backButton = document.createElement("button");
-            backButton.innerHTML = "Edit Offer";
-            article.appendChild(backButton);
+            let editButton = document.createElement("button");
+            editButton.innerHTML = "Edit";
+            editButton.addEventListener('click', function(){
+                editButton.disabled = true;
+                saveButton.disabled = false;
+                display.editOther(data.a_id, data);
+            }, false);
+            article.appendChild(editButton);
 
-            let requestButton = document.createElement("button");
-            requestButton.innerHTML = "Delete Offer";
-            article.appendChild(requestButton);
+            let deleteButton = document.createElement("button");
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener('click', function(){
+                display.deleteArticleByID(data.a_id);
+            }, false);
+            article.appendChild(deleteButton);
+
+            let saveButton = document.createElement("button");
+            saveButton.innerHTML = "Save";
+            saveButton.disabled = true;
+            saveButton.addEventListener('click', function () {
+                let other = new Other(
+                    data.a_title,
+                    document.getElementById("a_description_input_" + data.a_id).value,
+                    data.a_imageurl,
+                    data.a_publicationdate
+                );
+                console.log(other);
+                display.putArticle(data.a_id, other);
+            }, false);
+            article.appendChild(saveButton);
 
             display.areaDisplay.appendChild(article);
+        }
+
+        editOther(id, data) {
+            let desc = document.getElementById("a_description_" + data.a_id);
+            let descInput = document.createElement("input");
+            descInput.id = "a_description_input_" + data.a_id;
+            descInput.value = data.a_description;
+            desc.replaceChild(descInput, document.getElementById("a_description_value_" + data.a_id));
         }
 
         reload(){
             window.open("myarea.html", "_self");
         }
-
     }
-
 
     let display = new myAreaDisplay();
 });
