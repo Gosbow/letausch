@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                 if (data.n_state == 1) {
                     if (currentuser == data.n_responder) {
-                        notificationmessage.innerHTML = data.n_date + "       " + data.n_requester + " möchte gerne + " + data.n_resarticle + " eintauschen."; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + data.n_requester + " möchte gerne " + data.n_resarticle + " eintauschen."; // add as defined
                         notificationaction.innerHTML = "Eintauschen";
                         notificationaction.setAttribute("onclick", "eintauschen()");
                     } else if (currentuser == data.n_requester) {
@@ -103,8 +103,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("notification"+data.n_id).appendChild(notificationaction);
 
             }
-
-
         }
     }
 
