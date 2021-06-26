@@ -82,56 +82,6 @@ nav li[aria-current] a:hover {
     background-color: #A9D18E;
     text-decoration: none;
 }
-/*
-input{
-    display: inline-block;
-    width: 350px;
-    border-radius: 10px;
-    padding: 4px;
-    float: left;
-}
-
-button{
-    border-radius: 10px;
-    padding: 4px;
-    float: right;
-    width: 20px;
-    height: 20px;
-}
-
- */
 form{
     float: right;
-}
-
-/*
-#games:hover{
-    background-image: url('img/logo/categories/games.jpg');
-    background-size: 170px;
-    background-color: transparent;
-}
-#cd:hover{
-    background-image: url('img/logo/categories/cd.jpg');
-    background-size: 170px;
-    background-color: transparent;
-}
-#movies:hover{
-    background-image: url('img/logo/categories/movies.jpg');
-    background-size: 170px;
-    background-color: transparent;
-}
-#other:hover{
-    background-image: url('img/logo/categories/other.jpg');
-    background-size: 170px;
-    background-color: transparent;
-}
-#tools:hover{
-    background-image: url('img/logo/categories/tools.jpg');
-    background-size: 170px;
-    background-color: transparent;
-}
-#books:hover{
-    background-image: url('img/logo/categories/books.jpg');
-    background-size: 170px;
-    background-color: transparent;
 }

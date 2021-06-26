@@ -7,7 +7,6 @@
 .articles:hover{
     border-color: #A9D18E;
 }
-
 img{
     width: 10vw;
     margin: 10px;
@@ -24,4 +23,13 @@ div{
     border-color: #548235;
     margin-top: 100px;
     padding: 10px;
+}
+.notifications{
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #548235;
+    margin-top: 10px;
+}
+.notifications:hover{
+    border-color: #A9D18E;
 }

@@ -1,3 +1,5 @@
+var currentuser;
+
 var getJSON = function(url, callback) {
 
     var xhr = new XMLHttpRequest();
@@ -33,6 +35,7 @@ function logIn(){
             } else {
                 var mydata = data;
                 if (mydata.u_email == typedInUsername && mydata.u_pw == typedInPassword) {
+                    currentuser = mydata.u_email;
                     window.open("browse.html", "_self");
                 } else {
                     document.getElementById("messages").innerHTML = "Falsche Credentials!"
@@ -41,4 +44,3 @@ function logIn(){
         });
     }
 }
-
