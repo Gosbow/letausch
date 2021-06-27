@@ -10,7 +10,7 @@ var getJSON = function(url, callback) {
         //HTTP Status
         var status = xhr.status;
 
-        if (status == 200) {
+        if (status === 200) {
             callback(null, xhr.response);
         } else {
             callback(status);
@@ -24,7 +24,7 @@ function logIn(){
     let typedInUsername = document.getElementById("username").value;
     let typedInPassword = document.getElementById("password").value;
 
-    if(typedInUsername == "" || typedInPassword == ""){
+    if(typedInUsername === "" || typedInPassword === ""){
         document.getElementById("messages").innerHTML = "Bitte füllen Sie alle Felder aus!"
     }
     else {
@@ -34,11 +34,11 @@ function logIn(){
                 document.getElementById("messages").innerHTML = "Sie sind noch nicht registriert. Bitte legen Sie einen Account an!"
             } else {
                 var mydata = data;
-                if (mydata.u_email == typedInUsername && mydata.u_pw == typedInPassword) {
+                if (mydata.u_email === typedInUsername && mydata.u_pw === typedInPassword) {
                     currentuser = mydata.u_email;
                     window.open("browse.html", "_self");
                 } else {
-                    document.getElementById("messages").innerHTML = "Falsche Credentials!"
+                    document.getElementById("messages").innerHTML = "Falsche Credentials!";
                 }
             }
         });

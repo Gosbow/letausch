@@ -15,7 +15,7 @@ function submitPersonalData() {
     var ln = document.getElementById("lastname").value;
     var tel = document.getElementById("tel").value;
 
-    if(uname == "" ||pw == "" || fn == "" || ln == "")
+    if(uname === "" ||pw === "" || fn === "" || ln === "")
     {
         document.getElementById("messages").innerHTML = "Bitte füllen Sie alle Pflichtfelder aus!";
     } else{
@@ -63,4 +63,3 @@ function register(){
     var submit = document.getElementById("register");
     submit.setAttribute("onclick", "submitPersonalData()")
 }
-
