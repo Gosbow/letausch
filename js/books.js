@@ -4,10 +4,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://letausch.ffkledering.at:3000/webapi/ol/";
     const postURL = "http://letausch.ffkledering.at:3000/article";
 
-    const user_ID = "bernhard@letausch.at";
-
     class Book{
-        constructor() {
+        constructor(userID) {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_books_isbn = document.getElementById("a_books_isbn").value.toString();
@@ -15,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_imageurl = "img/book_placeholder.jpg";
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Books";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
 
         static getSearch(){
@@ -51,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
 
-        static postBook(){
-            let book = new Book();
+        static postBook(userID){
+            let book = new Book(userID);
 
             fetch(postURL, {
                 method: "POST",
@@ -71,18 +69,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
 
-    let searchButton = document.getElementById("searchButton");
-    searchButton.addEventListener('click', Book.getSearch,false);
+    fetch("http://letausch.ffkledering.at:3000/whoami")
+        .then(result => result.json())
+        .then(data => {
 
-    let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', function(){
-        if(document.getElementById("a_title").value === ""){
-            document.getElementById("message").innerHTML = "Please enter a title!";
-        }
-        else{
-            Book.postBook();
-            Book.clearSearch();
-            document.getElementById("message").innerHTML = "Trade offer created successfully!";
-        }
-    },false);
+            let searchButton = document.getElementById("searchButton");
+            searchButton.addEventListener('click', Book.getSearch,false);
+
+            let createButton = document.getElementById("createButton");
+            createButton.addEventListener('click', function(){
+                if(document.getElementById("a_title").value === ""){
+                    document.getElementById("message").innerHTML = "Please enter a title!";
+                }
+                else{
+                    Book.postBook(data.iam);
+                    Book.clearSearch();
+                    document.getElementById("message").innerHTML = "Trade offer created successfully!";
+                }
+            },false);
+
+        })
+        .catch(error => console.error(error));
+
 });

@@ -4,10 +4,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://letausch.ffkledering.at:3000/webapi/gb/";
     const postURL = "http://letausch.ffkledering.at:3000/article";
 
-    const user_ID = "bernhard@letausch.at";
-
     class VideoGame{
-        constructor() {
+        constructor(userID) {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_vgame_platform = document.getElementById("a_vgame_platform").value.toString();
@@ -16,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Video Games";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
 
         static getSearch(){
@@ -91,10 +89,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
 
-
-
-        static postVideoGame(){
-            let videogame = new VideoGame();
+        static postVideoGame(userID){
+            let videogame = new VideoGame(userID);
 
             fetch(postURL, {
                 method: "POST",
@@ -113,18 +109,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
 
-    let searchButton = document.getElementById("searchButton");
-    searchButton.addEventListener('click', VideoGame.getSearch,false);
+    fetch("http://letausch.ffkledering.at:3000/whoami")
+        .then(result => result.json())
+        .then(data => {
+            let searchButton = document.getElementById("searchButton");
+            searchButton.addEventListener('click', VideoGame.getSearch,false);
 
-    let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', function(){
-        if(document.getElementById("a_title").value === ""){
-            document.getElementById("message").innerHTML = "Please enter a title!";
-        }
-        else{
-            VideoGame.postVideoGame();
-            VideoGame.clearSearch();
-            document.getElementById("message").innerHTML = "Trade offer created successfully!";
-        }
-    },false);
+            let createButton = document.getElementById("createButton");
+            createButton.addEventListener('click', function(){
+                if(document.getElementById("a_title").value === ""){
+                    document.getElementById("message").innerHTML = "Please enter a title!";
+                }
+                else{
+                    VideoGame.postVideoGame(data.iam);
+                    VideoGame.clearSearch();
+                    document.getElementById("message").innerHTML = "Trade offer created successfully!";
+                }
+            },false);
+        })
+        .catch(error => console.error(error));
+
+
 });

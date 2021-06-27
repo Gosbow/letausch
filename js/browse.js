@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // const getURL = "http://localhost:3000/article";
     const getURL = "http://letausch.ffkledering.at:3000/article";
 
-    const user_ID = "bernhard@letausch.at";
-
     class Article{
         constructor(data) {
             this.a_id = data.a_id;

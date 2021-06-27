@@ -4,10 +4,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     const searchURL = "http://letausch.ffkledering.at:3000/webapi/bgg/";
     const articleURL = "http://letausch.ffkledering.at:3000/article";
 
-    const user_ID = "bernhard@letausch.at";
-
     class BoardGame{
-        constructor() {
+        constructor(userID) {
             this.a_title = document.getElementById("a_title").value.toString();
             this.a_author = document.getElementById("a_author").value.toString();
             this.a_genre = document.getElementById("a_genre").value.toString();
@@ -17,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_imageurl = document.getElementById("a_imageurl").getAttribute("src");
             this.a_publicationdate = new Date().toISOString();
             this.a_category = "Board Games";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
 
         static getSearch(){
@@ -57,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
 
-        static postBoardGame(){
-            let boardgame = new BoardGame();
+        static postBoardGame(userID){
+            let boardgame = new BoardGame(userID);
 
             fetch(articleURL, {
                 method: "POST",
@@ -77,18 +75,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
 
-    let searchButton = document.getElementById("searchButton");
-    searchButton.addEventListener('click', BoardGame.getSearch,false);
+    fetch("http://letausch.ffkledering.at:3000/whoami")
+            .then(result => result.json())
+            .then(data => {
 
-    let createButton = document.getElementById("createButton");
-    createButton.addEventListener('click', function(){
-        if(document.getElementById("a_title").value === ""){
-            document.getElementById("message").innerHTML = "Please enter a title!";
-        }
-        else{
-            BoardGame.postBoardGame();
-            BoardGame.clearSearch();
-            document.getElementById("message").innerHTML = "Trade offer created successfully!";
-        }
-    },false);
+                let searchButton = document.getElementById("searchButton");
+                searchButton.addEventListener('click', BoardGame.getSearch,false);
+
+                let createButton = document.getElementById("createButton");
+                createButton.addEventListener('click', function(){
+                    if(document.getElementById("a_title").value === ""){
+                        document.getElementById("message").innerHTML = "Please enter a title!";
+                    }
+                    else{
+                        BoardGame.postBoardGame(data.iam);
+                        BoardGame.clearSearch();
+                        document.getElementById("message").innerHTML = "Trade offer created successfully!";
+                    }
+                },false);
+
+            })
+            .catch(error => console.error(error));
 });

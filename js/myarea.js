@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // const articleURL = "http://localhost:3000/article";
     const articleURL = "http://letausch.ffkledering.at:3000/article";
 
-    const user_ID = "bernhard@letausch.at";
-
     class Article{
         constructor(data) {
             this.a_id = data.a_id;
@@ -23,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     class BoardGame {
-        constructor(a_title, a_author, a_genre, a_bgame_players, a_bgame_playtime, a_description, a_imageurl, a_publicationdate) {
+        constructor(a_title, a_author, a_genre, a_bgame_players, a_bgame_playtime, a_description, a_imageurl, a_publicationdate, userID) {
             this.a_title = a_title;
             this.a_author = a_author;
             this.a_genre = a_genre;
@@ -33,11 +31,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_imageurl = a_imageurl;
             this.a_publicationdate = a_publicationdate;
             this.a_category = "Board Games";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
     }
     class VideoGame {
-        constructor(a_title, a_author, a_vgame_platform, a_genre, a_description, a_imageurl, a_publicationdate) {
+        constructor(a_title, a_author, a_vgame_platform, a_genre, a_description, a_imageurl, a_publicationdate, userID) {
             this.a_title = a_title;
             this.a_author = a_author;
             this.a_vgame_platform = a_vgame_platform;
@@ -46,11 +44,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_imageurl = a_imageurl;
             this.a_publicationdate = a_publicationdate;
             this.a_category = "Video Games";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
     }
     class Book {
-        constructor(a_title, a_author, a_books_isbn, a_description, a_imageurl, a_publicationdate) {
+        constructor(a_title, a_author, a_books_isbn, a_description, a_imageurl, a_publicationdate, userID) {
             this.a_title = a_title;
             this.a_author = a_author;
             this.a_books_isbn = a_books_isbn;
@@ -58,24 +56,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.a_imageurl = a_imageurl;
             this.a_publicationdate = a_publicationdate;
             this.a_category = "Books";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
     }
     class Other {
-        constructor(a_title, a_description, a_imageurl, a_publicationdate) {
+        constructor(a_title, a_description, a_imageurl, a_publicationdate, userID) {
             this.a_title = a_title;
             this.a_description = a_description;
             this.a_imageurl = a_imageurl;
             this.a_publicationdate = a_publicationdate;
             this.a_category = "Other";
-            this.a_u_email = user_ID;
+            this.a_u_email = userID;
         }
     }
 
     class myAreaDisplay {
-        constructor() {
+        constructor(userID) {
             this.areaDisplay = document.getElementById("myAreaDisplay");
             this.articles = [];
+            this.userID = userID;
 
             fetch(articleURL)
                 .then(function(response){
@@ -93,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         displayAll() {
             let data = display.articles;
             for (let j = 0; j < data.length; j++) {
-                if(display.articles[j].a_u_email === user_ID){
+                if(display.articles[j].a_u_email === display.userID){
                     if(data[j].a_category === "Board Games"){
                         display.displayBoardGame(data[j]);
                     }
@@ -110,8 +109,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
 
-        deleteArticleByID(id){
-            let deleteURL = articleURL + '/' + id;
+        deleteArticleByID(articleID){
+            let deleteURL = articleURL + '/' + articleID;
 
             fetch(deleteURL, {
                 method: "DELETE"
@@ -126,8 +125,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 })
         }
 
-        putArticle(id, article){
-            let putURL = articleURL + '/' + id;
+        putArticle(articleID, article){
+            let putURL = articleURL + '/' + articleID;
 
             fetch(putURL, {
                 method: "PUT",
@@ -243,7 +242,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("a_bgame_playtime_input_" + data.a_id).value,
                     document.getElementById("a_description_input_" + data.a_id).value,
                     data.a_imageurl,
-                    data.a_publicationdate
+                    data.a_publicationdate,
+                    display.userID
                 );
                 console.log(boardgame);
                 display.putArticle(data.a_id, boardgame);
@@ -372,7 +372,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("a_genre_input_" + data.a_id).value,
                     document.getElementById("a_description_input_" + data.a_id).value,
                     data.a_imageurl,
-                    data.a_publicationdate
+                    data.a_publicationdate,
+                    display.userID
                 );
                 console.log(videogame);
                 display.putArticle(data.a_id, videogame);
@@ -485,7 +486,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     document.getElementById("a_books_isbn_input_" + data.a_id).value,
                     document.getElementById("a_description_input_" + data.a_id).value,
                     data.a_imageurl,
-                    data.a_publicationdate
+                    data.a_publicationdate,
+                    display.userID
                 );
                 console.log(book);
                 display.putArticle(data.a_id, book);
@@ -572,7 +574,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     data.a_title,
                     document.getElementById("a_description_input_" + data.a_id).value,
                     data.a_imageurl,
-                    data.a_publicationdate
+                    data.a_publicationdate,
+                    display.userID
                 );
                 console.log(other);
                 display.putArticle(data.a_id, other);
@@ -595,5 +598,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
         }
     }
 
-    let display = new myAreaDisplay();
+    let display;
+    fetch("http://letausch.ffkledering.at:3000/whoami")
+        .then(result => result.json())
+        .then(data => {
+             display = new myAreaDisplay(data.iam);
+        })
+        .catch(error => console.error(error));
+
 });
