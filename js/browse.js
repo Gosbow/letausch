@@ -241,9 +241,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
             backButton.innerHTML = "Back";
             backButton.addEventListener('click', display.displayAll, false);
             article.appendChild(backButton);
+            backButton.addEventListener('click', function(){
+                fetch("http://letausch.ffkledering.at:3000/notification", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
 
+
+
+                    ),
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log("Boardgame POST Success: ", data);
+                    })
+                    .catch((error) =>{
+                        console.error("Boardgame POST Error: ", error);
+                    })
+
+
+            }, false);
             let requestButton = document.createElement("button");
             requestButton.innerHTML = "Request Trade";
+
             article.appendChild(requestButton);
 
             display.articleDisplay.appendChild(article);
