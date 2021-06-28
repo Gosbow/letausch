@@ -122,12 +122,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 head.innerHTML = "This could be your trade offer!";
                 def.appendChild(head);
                 let cat = document.createElement("p");
-                cat.className = "advert";
                 cat.innerHTML = "Board Games, Video Games, Books and more";
                 def.appendChild(cat);
                 let desc = document.createElement("p");
-                desc.className = "advert";
-                desc.innerHTML = "Just navigate to My \"My Area\" and get started now!";
+                desc.innerHTML = "Just navigate to \"My Area\" and get started now!";
                 def.appendChild(desc);
                 display.areaDisplay.appendChild(def);
             }
