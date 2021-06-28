@@ -584,15 +584,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
     }
-    //let display = new mainDisplay("roman@letausch.at");
-    let display = new mainDisplay("bernhard@letausch.at");
 
-    /*
+    let display;
     fetch("http://letausch.ffkledering.at:3000/whoami")
         .then(result => result.json())
         .then(data => {
             display = new mainDisplay(data.iam);
         })
         .catch(error => console.error(error));
-    */
+
 });

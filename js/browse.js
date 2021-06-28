@@ -560,8 +560,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     }
 
-    let display = new mainDisplay("bernhard@letausch.at");
-/*
+    let display;
     fetch("http://letausch.ffkledering.at:3000/whoami")
         .then(result => result.json())
         .then(data => {
@@ -569,5 +568,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
         })
         .catch(error => console.error(error));
 
- */
 });
