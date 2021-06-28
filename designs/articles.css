@@ -1,3 +1,10 @@
+img{
+    width: 15vw;
+    margin: 10px;
+}
+div{
+    margin:80px;
+}
 .articles{
     border-radius: 10px;
     border-style: solid;
@@ -18,15 +25,19 @@
 .articles:hover{
     border-color: #A9D18E;
 }
-img{
-    width: 15vw;
-    margin: 10px;
-}
+
 .articles a{
     margin-top: 0;
 }
-div{
-    margin:80px;
+.articles button{
+    background-color: #548235;
+    color: white;
+    font-weight:bold;
+    font-size: 12px;
+    margin: 2px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
 }
 .specificarticle{
     border-radius: 10px;
@@ -44,7 +55,7 @@ div{
 .notifications:hover{
     border-color: #A9D18E;
 }
-.articles button{
+.notifications button{
     background-color: #548235;
     color: white;
     font-weight: bold;
