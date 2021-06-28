@@ -91,8 +91,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
         displayAll() {
             let data = display.articles;
+            let noData = false;
+
             for (let j = 0; j < data.length; j++) {
                 if(display.articles[j].a_u_email === display.userID){
+                    noData = true;
                     if(data[j].a_category === "Board Games"){
                         display.displayBoardGame(data[j]);
                     }
@@ -106,6 +109,28 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         display.displayOther(data[j]);
                     }
                 }
+            }
+
+            if(noData === false){
+                let def = document.createElement("article");
+                def.className = "articles";
+                let img = document.createElement("img");
+                img.src = "img/catan.jpg";
+                img.alt = "Settlers of Catan cover/artwork";
+                def.appendChild(img);
+                let head = document.createElement("h2");
+                head.innerHTML = "This could be your trade offer!";
+                def.appendChild(head);
+                let cat = document.createElement("p");
+                cat.innerHTML = "Board Games, Video Games, Books and more";
+                def.appendChild(cat);
+                let date = document.createElement("p");
+                date.innerHTML = "Trade offer placed on: Today";
+                def.appendChild(date);
+                let desc = document.createElement("p");
+                desc.innerHTML = "Description: Just navigate to My Area / Offer Board Game, etc. and get started now!";
+                def.appendChild(desc);
+                display.areaDisplay.appendChild(def);
             }
         }
 
