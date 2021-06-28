@@ -324,7 +324,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             display.articleDisplay.appendChild(article);
         }
 
-        displayBook(data){
+        displayBook(userID, data){
             let article = document.createElement("article");
             article.setAttribute("class","articles");
             article.id = data.a_id;
@@ -411,7 +411,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             display.articleDisplay.appendChild(article);
         }
 
-        displayOther(data){
+        displayOther(userID, data){
             let article = document.createElement("article");
             article.setAttribute("class","articles");
             article.id = data.a_id;
