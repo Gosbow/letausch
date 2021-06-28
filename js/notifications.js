@@ -134,20 +134,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 }
 
                 else if (data.n_state === 2) {
-
                     if (userID === data.n_responder) {
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " wurde bei " + data.n_responder + " angefragt."; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " wurde bei " + data.n_requester + " angefragt."; // add as defined
                         notificationaction.style.display="none";
                     }
 
                     else if (userID === data.n_requester) {
                         notificationmessage.innerHTML = data.n_date + "       " + data.n_responder + " möchte gerne " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit dir tauschen."; // add as defined
                         notificationaction.innerHTML = "Annehmen";
-                        notificationaction.addEventListener('click', function(){
-                                let putURL = getURL + data.n_id;
+                        notificationaction.addEventListener("click", addEventListener('click', function(){
+                            let putURL = getURL + data.n_id;
 
-                                let current = new Date(Date.now());
-                                let currentdateJSON =
+                            let current = new Date(Date.now());
+                            let currentdateJSON =
                                 current.getDate() + "." +
                                 current.getMonth()+1 + "." +
                                 current.getFullYear() + " " +
@@ -155,44 +154,107 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 current.getMinutes() + ":" +
                                 current.getSeconds();
 
-                                fetch(putURL, {
-                                    method: "PUT",
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify({
-                                            "n_requester": data.n_requester,
-                                            "n_responder": data.n_responder,
-                                            "n_reqarticle": data.n_responder, //data.n_reqarticle,
-                                            "n_resarticle": data.n_resarticle,
-                                            "n_state": 3,
-                                            "n_date": currentdateJSON
-                                        }),
+                            fetch(putURL, {
+                                method: "PUT",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    "n_requester": data.n_requester,
+                                    "n_responder": data.n_responder,
+                                    "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
+                                    "n_resarticle": data.n_resarticle,
+                                    "n_state": 3,
+                                    "n_date": currentdateJSON
+                                }),
+                            })
+                                .then(response => response.text())
+                                .then(data => {
+                                    console.log("Notif PUT Success: ", data);
+                                    window.location.reload();
                                 })
-                                    .then(response => response.text())
-                                    .then(data => {
-                                        console.log("Notif PUT Success: ", data);
-                                        window.location.reload();
-                                    })
-                                    .catch((error) =>{
-                                        console.error("Notif PUT Error: ", error);
-                                    })
-                            }, false);
+                                .catch((error) =>{
+                                    console.error("Notif PUT Error: ", error);
+                                })
+
+                        }, false));
                     }
                 }
                 else if (data.n_state === 3) {
                     if (userID === data.n_responder) {
 
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_responder + " wurde bestätigt."; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_requester + " wurde bestätigt."; // add as defined
+                        notificationaction.innerHTML = "Tausch abschließen";
+
+                        fetch("http://letausch.ffkledering.at:3000/users/" + data.n_requester)
+                            .then(function (response) {
+                                response.json()
+                                    .then(function (json) {
+                                        var element = document.createElement("p");
+                                        element.setAttribute("id", "contact");
+                                        if (json.u_tel != null) {
+                                            element.innerHTML =
+                                                "Kontaktdaten: Name: " + json.u_firstname + " " + json.u_lastname + ", \n" +
+                                                "E-Mail: " + json.u_email + ", \n" +
+                                                "Tel: " + json.u_tel;
+                                        } else {
+                                            element.innerHTML =
+                                                "Kontaktdaten: Name: " + json.u_firstname + " " + json.u_lastname + ", \n" +
+                                                "E-Mail: " + json.u_email;
+                                        }
+                                        document.getElementById("notification" + data.n_id).appendChild(element);
+                                    })
+                            });
 
 
-                        fetch("http://letausch.ffkledering.at:3000/users/" + userID)
+                        notificationaction.addEventListener('click', function () {
+                            let putURL = getURL + data.n_id;
+
+                            let current = new Date(Date.now());
+                            let currentdateJSON =
+                                current.getDate() + "." +
+                                current.getMonth() + 1 + "." +
+                                current.getFullYear() + " " +
+                                current.getHours() + ":" +
+                                current.getMinutes() + ":" +
+                                current.getSeconds();
+
+                            fetch(putURL, {
+                                method: "PUT",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    "n_requester": data.n_requester,
+                                    "n_responder": data.n_responder,
+                                    "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
+                                    "n_resarticle": data.n_resarticle,
+                                    "n_state": 4,
+                                    "n_date": currentdateJSON
+                                }),
+                            })
+                                .then(response => response.text())
+                                .then(data => {
+                                    console.log("Notif PUT Success: ", data);
+                                    window.location.reload();
+                                })
+                                .catch((error) => {
+                                    console.error("Notif PUT Error: ", error);
+                                })
+
+                        }, false);
+
+                    } else if (userID === data.n_requester) {
+                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_responder + " wurde bestätigt." ; // add as defined
+                        notificationaction.innerHTML = "Tausch abschließen";
+
+                        fetch("http://letausch.ffkledering.at:3000/users/" + data.n_responder)
                             .then(function(response){
                                 response.json()
                                     .then(function(json){
                                         var element = document.createElement("p");
                                         element.setAttribute("id", "contact");
-                                        if(json.u_tel != null){
+                                        if(json.u_tel != ""){
                                             element.innerHTML =
                                                 "Kontaktdaten: Name: " + json.u_firstname + " " + json.u_lastname + ", \n" +
                                                 "E-Mail: " + json.u_email + ", \n" +
@@ -205,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         document.getElementById("notification"+data.n_id).appendChild(element);
                                     })
                             });
-                        notificationaction.innerHTML = "Tausch abschließen";
+
                         notificationaction.addEventListener('click', function(){
                             let putURL = getURL + data.n_id;
 
@@ -226,7 +288,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 body: JSON.stringify({
                                     "n_requester": data.n_requester,
                                     "n_responder": data.n_responder,
-                                    "n_reqarticle": data.n_responder, //data.n_reqarticle,
+                                    "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
                                     "n_resarticle": data.n_resarticle,
                                     "n_state": 4,
                                     "n_date": currentdateJSON
@@ -240,13 +302,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 .catch((error) =>{
                                     console.error("Notif PUT Error: ", error);
                                 })
+
                         }, false);
-
-                    } else if (userID === data.n_requester) {
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_responder + " wurde bestätigt." ; // add as defined
-                        notificationaction.innerHTML = "Kontaktieren";
                     }
-
                 }else{
                     notificationmessage.innerHTML = "No message.";
                     notificationaction.innerHTML = "no button";
@@ -258,7 +316,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
     }
-
     //let display = new mainDisplay("roman@letausch.at");
     let display = new mainDisplay("bernhard@letausch.at");
 
