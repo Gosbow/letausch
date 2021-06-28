@@ -21,9 +21,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     class mainDisplay {
-        constructor() {
+        constructor(userID) {
             this.articleDisplay = document.getElementById("articleDisplay");
             this.articles = [];
+            this.userID = userID;
             this.chosenArticle = 0;
 
             fetch(getURL)
@@ -33,12 +34,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             for(let i = 0; i < json.length; i++){
                                 display.articles.push(new Article(json[i]));
                             }
-                            display.displayAll();
+                            display.displayAll(userID);
                         })
                 })
         }
 
-        displayAll() {
+        displayAll(userID) {
             let path = window.location.pathname;
             let page = path.split("/").pop();
             console.log(page);
@@ -49,20 +50,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 if (page === "browse.html") {
                     if (data[j].a_category === "Board Games" || data[j].a_category === "Video Games" ||
                         data[j].a_category === "Books" || data[j].a_category === "Other") {
-                        display.displayArticle(data[j]);
+                        display.displayArticle(userID, data[j]);
                     }
                 }
                 if (page === "boardgames.html" && data[j].a_category === "Board Games") {
-                    display.displayArticle(data[j]);
+                    display.displayArticle(userID, data[j]);
                 }
                 if (page === "videogames.html" && data[j].a_category === "Video Games") {
-                    display.displayArticle(data[j]);
+                    display.displayArticle(userID, data[j]);
                 }
                 if (page === "books.html" && data[j].a_category === "Books") {
-                    display.displayArticle(data[j]);
+                    display.displayArticle(userID, data[j]);
                 }
                 if (page === "others.html" && data[j].a_category === "Other") {
-                    display.displayArticle(data[j]);
+                    display.displayArticle(userID, data[j]);
                 }
             }
         }
@@ -76,27 +77,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         }
 
-        displayDetailView(id){
+        displayDetailView(userID, id){
             display.displayNone();
             for(let i = 0; i < display.articles.length; i++){
                 if(id === display.articles[i].a_id){
                     if(display.articles[i].a_category === "Board Games"){
-                        display.displayBoardGame(display.articles[i]);
+                        display.displayBoardGame(userID, display.articles[i]);
                     }
                     if(display.articles[i].a_category === "Video Games"){
-                        display.displayVideoGame(display.articles[i]);
+                        display.displayVideoGame(userID, display.articles[i]);
                     }
                     if(display.articles[i].a_category === "Books"){
-                        display.displayBook(display.articles[i]);
+                        display.displayBook(userID, display.articles[i]);
                     }
                     if(display.articles[i].a_category === "Other"){
-                        display.displayOther(display.articles[i]);
+                        display.displayOther(userID, display.articles[i]);
                     }
                 }
             }
         }
 
-        displayArticle(data){
+        displayArticle(userID, data){
             let article = document.createElement("article");
             article.setAttribute("class","articles");
             article.id = data.a_id;
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             imageLink.addEventListener('click', function(){
                 display.chosenArticle = data.a_id
                 console.log(display.chosenArticle);
-                display.displayDetailView(display.chosenArticle);
+                display.displayDetailView(userID, display.chosenArticle);
             }, false);
 
             let image = document.createElement("img");
@@ -122,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             titleLink.addEventListener('click', function(){
                 display.chosenArticle = data.a_id
                 console.log(display.chosenArticle);
-                display.displayDetailView(display.chosenArticle);
+                display.displayDetailView(userID, display.chosenArticle);
             }, false);
 
             let title = document.createElement("h2");
@@ -141,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             display.articleDisplay.appendChild(article);
         }
 
-        displayBoardGame(data){
+        displayBoardGame(userID, data){
             let article = document.createElement("article");
             article.setAttribute("class","articles");
             article.id = data.a_id;
@@ -192,12 +193,49 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             let requestButton = document.createElement("button");
             requestButton.innerHTML = "Request Trade";
-            article.appendChild(requestButton);
+            requestButton.addEventListener('click', function(){
 
+                let current = new Date(Date.now());
+                let currentdateJSON =
+                    current.getDate() + "." +
+                    current.getMonth()+1 + "." +
+                    current.getFullYear() + " " +
+                    current.getHours() + ":" +
+                    current.getMinutes() + ":" +
+                    current.getSeconds();
+
+                fetch("http://letausch.ffkledering.at:3000/notification", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            "n_requester": userID,
+                            "n_responder": data.a_u_email,
+                            "n_reqarticle": null,
+                            "n_resarticle": data.a_id,
+                            "n_state": 1,
+                            "n_date": currentdateJSON
+                        }
+                    ),
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log("Boardgame POST Success: ", data);
+                    })
+                    .catch((error) =>{
+                        console.error("Boardgame POST Error: ", error);
+                    })
+
+
+            }, false);
+
+            article.appendChild(requestButton);
             display.articleDisplay.appendChild(article);
         }
 
-        displayVideoGame(data){
+        displayVideoGame(userID, data){
             let article = document.createElement("article");
             article.setAttribute("class","articles");
             article.id = data.a_id;
@@ -241,16 +279,34 @@ document.addEventListener("DOMContentLoaded", function (event) {
             backButton.innerHTML = "Back";
             backButton.addEventListener('click', display.displayAll, false);
             article.appendChild(backButton);
-            backButton.addEventListener('click', function(){
+
+            let requestButton = document.createElement("button");
+            requestButton.innerHTML = "Request Trade";
+            requestButton.addEventListener('click', function(){
+
+                let current = new Date(Date.now());
+                let currentdateJSON =
+                    current.getDate() + "." +
+                    current.getMonth()+1 + "." +
+                    current.getFullYear() + " " +
+                    current.getHours() + ":" +
+                    current.getMinutes() + ":" +
+                    current.getSeconds();
+
                 fetch("http://letausch.ffkledering.at:3000/notification", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(
-
-
-
+                        {
+                            "n_requester": userID,
+                            "n_responder": data.a_u_email,
+                            "n_reqarticle": null,
+                            "n_resarticle": data.a_id,
+                            "n_state": 1,
+                            "n_date": currentdateJSON
+                        }
                     ),
                 })
                     .then(response => response.text())
@@ -263,9 +319,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 
             }, false);
-            let requestButton = document.createElement("button");
-            requestButton.innerHTML = "Request Trade";
-
             article.appendChild(requestButton);
 
             display.articleDisplay.appendChild(article);
@@ -314,6 +367,45 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             let requestButton = document.createElement("button");
             requestButton.innerHTML = "Request Trade";
+            requestButton.addEventListener('click', function(){
+
+                let current = new Date(Date.now());
+                let currentdateJSON =
+                    current.getDate() + "." +
+                    current.getMonth()+1 + "." +
+                    current.getFullYear() + " " +
+                    current.getHours() + ":" +
+                    current.getMinutes() + ":" +
+                    current.getSeconds();
+
+                fetch("http://letausch.ffkledering.at:3000/notification", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            "n_requester": userID,
+                            "n_responder": data.a_u_email,
+                            "n_reqarticle": null,
+                            "n_resarticle": data.a_id,
+                            "n_state": 1,
+                            "n_date": currentdateJSON
+                        }
+                    ),
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log("Boardgame POST Success: ", data);
+                    })
+                    .catch((error) =>{
+                        console.error("Boardgame POST Error: ", error);
+                    })
+
+
+            }, false);
+
+
             article.appendChild(requestButton);
 
             display.articleDisplay.appendChild(article);
@@ -354,6 +446,44 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
             let requestButton = document.createElement("button");
             requestButton.innerHTML = "Request Trade";
+            requestButton.addEventListener('click', function(){
+
+                let current = new Date(Date.now());
+                let currentdateJSON =
+                    current.getDate() + "." +
+                    current.getMonth()+1 + "." +
+                    current.getFullYear() + " " +
+                    current.getHours() + ":" +
+                    current.getMinutes() + ":" +
+                    current.getSeconds();
+
+                fetch("http://letausch.ffkledering.at:3000/notification", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            "n_requester": userID,
+                            "n_responder": data.a_u_email,
+                            "n_reqarticle": null,
+                            "n_resarticle": data.a_id,
+                            "n_state": 1,
+                            "n_date": currentdateJSON
+                        }
+                    ),
+                })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log("Boardgame POST Success: ", data);
+                    })
+                    .catch((error) =>{
+                        console.error("Boardgame POST Error: ", error);
+                    })
+
+
+            }, false);
+
             article.appendChild(requestButton);
 
             display.articleDisplay.appendChild(article);
@@ -361,5 +491,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     }
 
-    let display = new mainDisplay();
+    let display = new mainDisplay("bernhard@letausch.at");
+/*
+    fetch("http://letausch.ffkledering.at:3000/whoami")
+        .then(result => result.json())
+        .then(data => {
+            display = new mainDisplay(data.iam);
+        })
+        .catch(error => console.error(error));
+
+ */
 });
