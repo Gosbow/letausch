@@ -63,66 +63,408 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 notificationaction.id = "notificationaction"+data.n_id;
                 //notificationaction.addEventListener('click', putNot(data.n_id, data.), false);
 
+                let articlesArea = document.createElement("span");
+                articlesArea.id = "articlesArea";
 
                 if (data.n_state === 1) {
                     if (userID === data.n_responder) {
                         notificationmessage.innerHTML = data.n_date + "       " + data.n_requester + " möchte gerne " + data.n_resarticle + " eintauschen."; // add as defined
+
                         notificationaction.innerHTML = "Eintauschen";
-                        //notificationaction.setAttribute("onclick", "eintauschen()");
                         notificationaction.addEventListener("click", function(){
-                            fetch("http://letausch.ffkledering.at:3000/article/user/" + userID)
+                            fetch("http://letausch.ffkledering.at:3000/article/user/" + data.n_requester)
                                 .then(function(response){
                                     response.json()
                                         .then(function(json){
                                             for(let i = 0; i < json.length; i++){
                                                 notificationaction.style.display="none";
-                                                var element = document.createElement("p");
-                                                element.setAttribute("id", "article"+i);
-                                                element.innerHTML = json[i].a_title;
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+                                                if(json[i].a_category === "Board Games") {
+                                                    let article = document.createElement("article");
+                                                    article.setAttribute("class", "articles");
+                                                    article.id = "article_" + json[i].a_id;
 
-                                                var elementsub = document.createElement("button");
-                                                elementsub.innerHTML = "Auswählen";
+                                                    let image = document.createElement("img");
+                                                    image.src = json[i].a_imageurl;
+                                                    image.alt = json[i].a_title + " cover/artwork";
+                                                    article.appendChild(image);
 
-                                                //element.setAttribute("href", "http://letausch.ffkledering.at:3000/article/"+json[i].a_id)
-                                                document.getElementById("notification"+data.n_id).appendChild(element);
-                                                document.getElementById("notification"+data.n_id).appendChild(elementsub);
+                                                    let title = document.createElement("a");
+                                                    let titleText = document.createElement("h2");
+                                                    titleText.innerHTML = json[i].a_title;
+                                                    title.appendChild(titleText);
+                                                    article.appendChild(title);
 
-                                                elementsub.addEventListener('click', function(){
-                                                    let putURL = getURL + data.n_id;
+                                                    let cat = document.createElement("p");
+                                                    cat.innerHTML = "Category: " + json[i].a_category;
+                                                    article.appendChild(cat);
 
-                                                    let current = new Date(Date.now());
-                                                    let currentdateJSON =
-                                                        current.getDate() + "." +
-                                                        current.getMonth()+1 + "." +
-                                                        current.getFullYear() + " " +
-                                                        current.getHours() + ":" +
-                                                        current.getMinutes() + ":" +
-                                                        current.getSeconds();
+                                                    let pub = document.createElement("p");
+                                                    pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(json[i].a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+                                                    article.appendChild(pub);
 
-                                                    fetch(putURL, {
-                                                        method: "PUT",
-                                                        headers: {
-                                                            'Content-Type': 'application/json',
-                                                        },
-                                                        body: JSON.stringify({
-                                                            "n_requester": data.n_requester,
-                                                            "n_responder": data.n_responder,
-                                                            "n_reqarticle": json[i].a_id, //data.n_reqarticle,
-                                                            "n_resarticle": data.n_resarticle,
-                                                            "n_state": 2,
-                                                            "n_date": currentdateJSON
-                                                        }),
-                                                    })
-                                                        .then(response => response.text())
-                                                        .then(data => {
-                                                            console.log("Notif PUT Success: ", data);
-                                                            window.location.reload();
+                                                    let auth = document.createElement("p");
+                                                    let authValue = document.createElement("span");
+                                                    authValue.innerHTML = json[i].a_author.toString();
+                                                    authValue.id = "a_author_value_" + json[i].a_id;
+                                                    auth.innerHTML = "Designer: ";
+                                                    auth.id = "a_author_" + json[i].a_id;
+                                                    auth.appendChild(authValue);
+                                                    article.appendChild(auth);
+
+                                                    let genre = document.createElement("p");
+                                                    let genreValue = document.createElement("span");
+                                                    genreValue.innerHTML = json[i].a_genre.toString();
+                                                    genreValue.id = "a_genre_value_" + json[i].a_id;
+                                                    genre.innerHTML = "Genre: ";
+                                                    genre.id = "a_genre_" + json[i].a_id;
+                                                    genre.appendChild(genreValue);
+                                                    article.appendChild(genre);
+
+                                                    let players = document.createElement("p");
+                                                    let playersValue = document.createElement("span");
+                                                    playersValue.innerHTML = json[i].a_bgame_players.toString();
+                                                    playersValue.id = "a_bgame_players_value_" + json[i].a_id;
+                                                    players.innerHTML = "Players: ";
+                                                    players.id = "a_bgame_players_" + json[i].a_id;
+                                                    players.appendChild(playersValue);
+                                                    article.appendChild(players);
+
+                                                    let playtime = document.createElement("p");
+                                                    let playtimeValue = document.createElement("span");
+                                                    playtimeValue.innerHTML = json[i].a_bgame_playtime.toString();
+                                                    playtimeValue.id = "a_bgame_playtime_value_" + json[i].a_id;
+                                                    playtime.innerHTML = "Playing Time: ";
+                                                    playtime.id = "a_bgame_playtime_" + json[i].a_id;
+                                                    playtime.appendChild(playtimeValue);
+                                                    article.appendChild(playtime);
+
+                                                    let desc = document.createElement("p");
+                                                    let descValue = document.createElement("span");
+                                                    descValue.innerHTML = json[i].a_description.toString();
+                                                    descValue.id = "a_description_value_" + json[i].a_id;
+                                                    desc.innerHTML = "Description: ";
+                                                    desc.id = "a_description_" + json[i].a_id;
+                                                    desc.appendChild(descValue);
+                                                    article.appendChild(desc);
+
+                                                    let reqButton = document.createElement("button");
+                                                    reqButton.innerHTML = "Tauschen";
+                                                    reqButton.addEventListener('click', function(){
+                                                        let putURL = getURL + data.n_id;
+
+                                                        let current = new Date(Date.now());
+                                                        let currentdateJSON =
+                                                            current.getDate() + "." +
+                                                            current.getMonth()+1 + "." +
+                                                            current.getFullYear() + " " +
+                                                            current.getHours() + ":" +
+                                                            current.getMinutes() + ":" +
+                                                            current.getSeconds();
+
+                                                        fetch(putURL, {
+                                                            method: "PUT",
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                            },
+                                                            body: JSON.stringify({
+                                                                "n_requester": data.n_requester,
+                                                                "n_responder": data.n_responder,
+                                                                "n_reqarticle": json[i].a_id, //data.n_reqarticle,
+                                                                "n_resarticle": data.n_resarticle,
+                                                                "n_state": 2,
+                                                                "n_date": currentdateJSON
+                                                            }),
                                                         })
-                                                        .catch((error) =>{
-                                                            console.error("Notif PUT Error: ", error);
+                                                            .then(response => response.text())
+                                                            .then(data => {
+                                                                console.log("Notif PUT Success: ", data);
+                                                                window.location.reload();
+                                                            })
+                                                            .catch((error) =>{
+                                                                console.error("Notif PUT Error: ", error);
+                                                            })
+                                                    }, false);
+                                                    article.appendChild(reqButton);
+
+                                                    articlesArea.appendChild(article);
+                                                }
+
+                                                else if(json[i].a_category === "Video Games"){
+                                                    let article = document.createElement("article");
+                                                    article.setAttribute("class","articles");
+                                                    article.id = "article_" + json[i].a_id;
+
+                                                    let image = document.createElement("img");
+                                                    image.src = json[i].a_imageurl;
+                                                    image.alt = json[i].a_title + " cover/artwork";
+                                                    article.appendChild(image);
+
+                                                    let title = document.createElement("a");
+                                                    let titleText = document.createElement("h2");
+                                                    titleText.innerHTML = json[i].a_title;
+                                                    title.appendChild(titleText);
+                                                    article.appendChild(title);
+
+                                                    let cat = document.createElement("p");
+                                                    cat.innerHTML = "Category: " + json[i].a_category;
+                                                    article.appendChild(cat);
+
+                                                    let pub = document.createElement("p");
+                                                    pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(json[i].a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+                                                    article.appendChild(pub);
+
+                                                    let auth = document.createElement("p");
+                                                    let authValue = document.createElement("span");
+                                                    authValue.innerHTML = json[i].a_author.toString();
+                                                    authValue.id = "a_author_value_" + json[i].a_id;
+                                                    auth.innerHTML = "Developer: "
+                                                    auth.id = "a_author_" + json[i].a_id;
+                                                    auth.appendChild(authValue);
+                                                    article.appendChild(auth);
+
+                                                    let platform = document.createElement("p");
+                                                    let platformValue = document.createElement("span");
+                                                    platformValue.innerHTML = json[i].a_vgame_platform.toString();
+                                                    platformValue.id = "a_vgame_platform_value_" + json[i].a_id;
+                                                    platform.innerHTML = "Platform: ";
+                                                    platform.id = "a_vgame_platform_" + json[i].a_id;
+                                                    platform.appendChild(platformValue);
+                                                    article.appendChild(platform);
+
+                                                    let genre = document.createElement("p");
+                                                    let genreValue = document.createElement("span");
+                                                    genreValue.innerHTML = json[i].a_genre.toString();
+                                                    genreValue.id = "a_genre_value_" + json[i].a_id;
+                                                    genre.innerHTML = "Genre: ";
+                                                    genre.id = "a_genre_" + json[i].a_id;
+                                                    genre.appendChild(genreValue);
+                                                    article.appendChild(genre);
+
+                                                    let desc = document.createElement("p");
+                                                    let descValue = document.createElement("span");
+                                                    descValue.innerHTML = json[i].a_description.toString();
+                                                    descValue.id = "a_description_value_" + json[i].a_id;
+                                                    desc.innerHTML = "Description: ";
+                                                    desc.id = "a_description_" + json[i].a_id;
+                                                    desc.appendChild(descValue);
+                                                    article.appendChild(desc);
+
+                                                    let reqButton = document.createElement("button");
+                                                    reqButton.innerHTML = "Tauschen";
+                                                    reqButton.addEventListener('click', function(){
+                                                        let putURL = getURL + data.n_id;
+
+                                                        let current = new Date(Date.now());
+                                                        let currentdateJSON =
+                                                            current.getDate() + "." +
+                                                            current.getMonth()+1 + "." +
+                                                            current.getFullYear() + " " +
+                                                            current.getHours() + ":" +
+                                                            current.getMinutes() + ":" +
+                                                            current.getSeconds();
+
+                                                        fetch(putURL, {
+                                                            method: "PUT",
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                            },
+                                                            body: JSON.stringify({
+                                                                "n_requester": data.n_requester,
+                                                                "n_responder": data.n_responder,
+                                                                "n_reqarticle": json[i].a_id, //data.n_reqarticle,
+                                                                "n_resarticle": data.n_resarticle,
+                                                                "n_state": 2,
+                                                                "n_date": currentdateJSON
+                                                            }),
                                                         })
-                                                }, false);
-                                            }
+                                                            .then(response => response.text())
+                                                            .then(data => {
+                                                                console.log("Notif PUT Success: ", data);
+                                                                window.location.reload();
+                                                            })
+                                                            .catch((error) =>{
+                                                                console.error("Notif PUT Error: ", error);
+                                                            })
+                                                    }, false);
+                                                    article.appendChild(reqButton);
+
+
+                                                    articlesArea.appendChild(article);
+                                                }
+
+                                                if(json[i].a_category === "Books"){
+                                                        let article = document.createElement("article");
+                                                        article.setAttribute("class","articles");
+                                                        article.id = "article_" + json[i].a_id;
+
+                                                        let image = document.createElement("img");
+                                                        image.src = json[i].a_imageurl;
+                                                        image.alt = json[i].a_title + " cover/artwork";
+                                                        article.appendChild(image);
+
+                                                        let title = document.createElement("a");
+                                                        let titleText = document.createElement("h2");
+                                                        titleText.innerHTML = json[i].a_title;
+                                                        title.appendChild(titleText);
+                                                        article.appendChild(title);
+
+                                                        let cat = document.createElement("p");
+                                                        cat.innerHTML = "Category: " + json[i].a_category;
+                                                        article.appendChild(cat);
+
+                                                        let pub = document.createElement("p");
+                                                        pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(json[i].a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+                                                        article.appendChild(pub);
+
+                                                        let auth = document.createElement("p");
+                                                        let authValue = document.createElement("span");
+                                                        authValue.innerHTML = json[i].a_author.toString();
+                                                        authValue.id = "a_author_value_" + json[i].a_id;
+                                                        auth.innerHTML = "Author: "
+                                                        auth.id = "a_author_" + json[i].a_id;
+                                                        auth.appendChild(authValue);
+                                                        article.appendChild(auth);
+
+                                                        let isbn = document.createElement("p");
+                                                        let isbnValue = document.createElement("span");
+                                                        isbnValue.innerHTML = json[i].a_books_isbn.toString();
+                                                        isbnValue.id = "a_books_isbn_value_" + json[i].a_id;
+                                                        isbn.innerHTML = "ISBN: ";
+                                                        isbn.id = "a_books_isbn_" + json[i].a_id;
+                                                        isbn.appendChild(isbnValue);
+                                                        article.appendChild(isbn);
+
+                                                        let desc = document.createElement("p");
+                                                        let descValue = document.createElement("span");
+                                                        descValue.innerHTML = json[i].a_description.toString();
+                                                        descValue.id = "a_description_value_" + json[i].a_id;
+                                                        desc.innerHTML = "Description: ";
+                                                        desc.id = "a_description_" + json[i].a_id;
+                                                        desc.appendChild(descValue);
+                                                        article.appendChild(desc);
+
+                                                    let reqButton = document.createElement("button");
+                                                    reqButton.innerHTML = "Tauschen";
+                                                    reqButton.addEventListener('click', function(){
+                                                        let putURL = getURL + data.n_id;
+
+                                                        let current = new Date(Date.now());
+                                                        let currentdateJSON =
+                                                            current.getDate() + "." +
+                                                            current.getMonth()+1 + "." +
+                                                            current.getFullYear() + " " +
+                                                            current.getHours() + ":" +
+                                                            current.getMinutes() + ":" +
+                                                            current.getSeconds();
+
+                                                        fetch(putURL, {
+                                                            method: "PUT",
+                                                            headers: {
+                                                                'Content-Type': 'application/json',
+                                                            },
+                                                            body: JSON.stringify({
+                                                                "n_requester": data.n_requester,
+                                                                "n_responder": data.n_responder,
+                                                                "n_reqarticle": json[i].a_id, //data.n_reqarticle,
+                                                                "n_resarticle": data.n_resarticle,
+                                                                "n_state": 2,
+                                                                "n_date": currentdateJSON
+                                                            }),
+                                                        })
+                                                            .then(response => response.text())
+                                                            .then(data => {
+                                                                console.log("Notif PUT Success: ", data);
+                                                                window.location.reload();
+                                                            })
+                                                            .catch((error) =>{
+                                                                console.error("Notif PUT Error: ", error);
+                                                            })
+                                                    }, false);
+                                                    article.appendChild(reqButton);
+
+
+                                                    articlesArea.appendChild(article);
+                                                    }
+
+                                                if(json[i].a_category === "Other"){
+                                                        let article = document.createElement("article");
+                                                        article.setAttribute("class","articles");
+                                                        article.id = "article_" + json[i].a_id;
+
+                                                        let image = document.createElement("img");
+                                                        image.src = json[i].a_imageurl;
+                                                        image.alt = json[i].a_title + " cover/artwork";
+                                                        article.appendChild(image);
+
+                                                        let title = document.createElement("a");
+                                                        let titleText = document.createElement("h2");
+                                                        titleText.innerHTML = json[i].a_title;
+                                                        title.appendChild(titleText);
+                                                        article.appendChild(title);
+
+                                                        let cat = document.createElement("p");
+                                                        cat.innerHTML = "Category: " + json[i].a_category;
+                                                        article.appendChild(cat);
+
+                                                        let pub = document.createElement("p");
+                                                        pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(json[i].a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+                                                        article.appendChild(pub);
+                                                        article.appendChild(pub);
+
+                                                        let desc = document.createElement("p");
+                                                        let descValue = document.createElement("span");
+                                                        descValue.innerHTML = json[i].a_description.toString();
+                                                        descValue.id = "a_description_value_" + json[i].a_id;
+                                                        desc.innerHTML = "Description: ";
+                                                        desc.id = "a_description_" + json[i].a_id;
+                                                        desc.appendChild(descValue);
+                                                        article.appendChild(desc);
+
+                                                        let reqButton = document.createElement("button");
+                                                        reqButton.innerHTML = "Tauschen";
+                                                        reqButton.addEventListener('click', function(){
+                                                            let putURL = getURL + data.n_id;
+
+                                                            let current = new Date(Date.now());
+                                                            let currentdateJSON =
+                                                                current.getDate() + "." +
+                                                                current.getMonth()+1 + "." +
+                                                                current.getFullYear() + " " +
+                                                                current.getHours() + ":" +
+                                                                current.getMinutes() + ":" +
+                                                                current.getSeconds();
+
+                                                            fetch(putURL, {
+                                                                method: "PUT",
+                                                                headers: {
+                                                                    'Content-Type': 'application/json',
+                                                                },
+                                                                body: JSON.stringify({
+                                                                    "n_requester": data.n_requester,
+                                                                    "n_responder": data.n_responder,
+                                                                    "n_reqarticle": json[i].a_id, //data.n_reqarticle,
+                                                                    "n_resarticle": data.n_resarticle,
+                                                                    "n_state": 2,
+                                                                    "n_date": currentdateJSON
+                                                                }),
+                                                            })
+                                                                .then(response => response.text())
+                                                                .then(data => {
+                                                                    console.log("Notif PUT Success: ", data);
+                                                                    window.location.reload();
+                                                                })
+                                                                .catch((error) =>{
+                                                                    console.error("Notif PUT Error: ", error);
+                                                                })
+                                                        }, false);
+                                                        article.appendChild(reqButton);
+
+                                                        articlesArea.appendChild(article);
+                                                    }
+                                                }
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------
                                         })
                                 })
 
@@ -237,6 +579,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("notificationDisplay").appendChild(notification);
                 document.getElementById("notification"+data.n_id).appendChild(notificationmessage);
                 document.getElementById("notification"+data.n_id).appendChild(notificationaction);
+                document.getElementById("notification"+data.n_id).appendChild(articlesArea);
 
             }
         }
