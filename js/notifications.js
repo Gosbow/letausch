@@ -70,61 +70,61 @@ document.addEventListener("DOMContentLoaded", function (event) {
                         notificationaction.innerHTML = "Eintauschen";
                         //notificationaction.setAttribute("onclick", "eintauschen()");
                         notificationaction.addEventListener("click", function(){
-                                fetch("http://letausch.ffkledering.at:3000/article/user/" + userID)
-                                    .then(function(response){
-                                        response.json()
-                                            .then(function(json){
-                                                for(let i = 0; i < json.length; i++){
-                                                    notificationaction.style.display="none";
-                                                    var element = document.createElement("p");
-                                                    element.setAttribute("id", "article"+i);
-                                                    element.innerHTML = json[i].a_title;
+                            fetch("http://letausch.ffkledering.at:3000/article/user/" + userID)
+                                .then(function(response){
+                                    response.json()
+                                        .then(function(json){
+                                            for(let i = 0; i < json.length; i++){
+                                                notificationaction.style.display="none";
+                                                var element = document.createElement("p");
+                                                element.setAttribute("id", "article"+i);
+                                                element.innerHTML = json[i].a_title;
 
-                                                    var elementsub = document.createElement("button");
-                                                    elementsub.innerHTML = "Auswählen";
+                                                var elementsub = document.createElement("button");
+                                                elementsub.innerHTML = "Auswählen";
 
-                                                    //element.setAttribute("href", "http://letausch.ffkledering.at:3000/article/"+json[i].a_id)
-                                                    document.getElementById("notification"+data.n_id).appendChild(element);
-                                                    document.getElementById("notification"+data.n_id).appendChild(elementsub);
+                                                //element.setAttribute("href", "http://letausch.ffkledering.at:3000/article/"+json[i].a_id)
+                                                document.getElementById("notification"+data.n_id).appendChild(element);
+                                                document.getElementById("notification"+data.n_id).appendChild(elementsub);
 
-                                                    elementsub.addEventListener('click', function(){
-                                                        let putURL = getURL + data.n_id;
+                                                elementsub.addEventListener('click', function(){
+                                                    let putURL = getURL + data.n_id;
 
-                                                        let current = new Date(Date.now());
-                                                        let currentdateJSON =
-                                                            current.getDate() + "." +
-                                                            current.getMonth()+1 + "." +
-                                                            current.getFullYear() + " " +
-                                                            current.getHours() + ":" +
-                                                            current.getMinutes() + ":" +
-                                                            current.getSeconds();
+                                                    let current = new Date(Date.now());
+                                                    let currentdateJSON =
+                                                        current.getDate() + "." +
+                                                        current.getMonth()+1 + "." +
+                                                        current.getFullYear() + " " +
+                                                        current.getHours() + ":" +
+                                                        current.getMinutes() + ":" +
+                                                        current.getSeconds();
 
-                                                        fetch(putURL, {
-                                                            method: "PUT",
-                                                            headers: {
-                                                                'Content-Type': 'application/json',
-                                                            },
-                                                            body: JSON.stringify({
-                                                                "n_requester": data.n_requester,
-                                                                "n_responder": data.n_responder,
-                                                                "n_reqarticle": json[i].a_id, //data.n_reqarticle,
-                                                                "n_resarticle": data.n_resarticle,
-                                                                "n_state": 2,
-                                                                "n_date": currentdateJSON
-                                                            }),
+                                                    fetch(putURL, {
+                                                        method: "PUT",
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                        },
+                                                        body: JSON.stringify({
+                                                            "n_requester": data.n_requester,
+                                                            "n_responder": data.n_responder,
+                                                            "n_reqarticle": json[i].a_id, //data.n_reqarticle,
+                                                            "n_resarticle": data.n_resarticle,
+                                                            "n_state": 2,
+                                                            "n_date": currentdateJSON
+                                                        }),
+                                                    })
+                                                        .then(response => response.text())
+                                                        .then(data => {
+                                                            console.log("Notif PUT Success: ", data);
+                                                            window.location.reload();
                                                         })
-                                                            .then(response => response.text())
-                                                            .then(data => {
-                                                                console.log("Notif PUT Success: ", data);
-                                                                window.location.reload();
-                                                            })
-                                                            .catch((error) =>{
-                                                                console.error("Notif PUT Error: ", error);
-                                                            })
-                                                    }, false);
-                                                }
-                                            })
-                                    })
+                                                        .catch((error) =>{
+                                                            console.error("Notif PUT Error: ", error);
+                                                        })
+                                                }, false);
+                                            }
+                                        })
+                                })
 
                         }, false);
                     } else if (userID === data.n_requester) {
@@ -181,10 +181,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                 }
                 else if (data.n_state === 3) {
+                    notificationaction.style.display="none";
                     if (userID === data.n_responder) {
 
                         notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_requester + " wurde bestätigt."; // add as defined
-                        notificationaction.innerHTML = "Tausch abschließen";
 
                         fetch("http://letausch.ffkledering.at:3000/users/" + data.n_requester)
                             .then(function (response) {
@@ -206,47 +206,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                     })
                             });
 
-
-                        notificationaction.addEventListener('click', function () {
-                            let putURL = getURL + data.n_id;
-
-                            let current = new Date(Date.now());
-                            let currentdateJSON =
-                                current.getDate() + "." +
-                                current.getMonth() + 1 + "." +
-                                current.getFullYear() + " " +
-                                current.getHours() + ":" +
-                                current.getMinutes() + ":" +
-                                current.getSeconds();
-
-                            fetch(putURL, {
-                                method: "PUT",
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    "n_requester": data.n_requester,
-                                    "n_responder": data.n_responder,
-                                    "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
-                                    "n_resarticle": data.n_resarticle,
-                                    "n_state": 4,
-                                    "n_date": currentdateJSON
-                                }),
-                            })
-                                .then(response => response.text())
-                                .then(data => {
-                                    console.log("Notif PUT Success: ", data);
-                                    window.location.reload();
-                                })
-                                .catch((error) => {
-                                    console.error("Notif PUT Error: ", error);
-                                })
-
-                        }, false);
-
                     } else if (userID === data.n_requester) {
                         notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_responder + " wurde bestätigt." ; // add as defined
-                        notificationaction.innerHTML = "Tausch abschließen";
+                        //notificationaction.innerHTML = "Tausch abschließen";
 
                         fetch("http://letausch.ffkledering.at:3000/users/" + data.n_responder)
                             .then(function(response){
@@ -267,43 +229,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         document.getElementById("notification"+data.n_id).appendChild(element);
                                     })
                             });
-
-                        notificationaction.addEventListener('click', function(){
-                            let putURL = getURL + data.n_id;
-
-                            let current = new Date(Date.now());
-                            let currentdateJSON =
-                                current.getDate() + "." +
-                                current.getMonth()+1 + "." +
-                                current.getFullYear() + " " +
-                                current.getHours() + ":" +
-                                current.getMinutes() + ":" +
-                                current.getSeconds();
-
-                            fetch(putURL, {
-                                method: "PUT",
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    "n_requester": data.n_requester,
-                                    "n_responder": data.n_responder,
-                                    "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
-                                    "n_resarticle": data.n_resarticle,
-                                    "n_state": 4,
-                                    "n_date": currentdateJSON
-                                }),
-                            })
-                                .then(response => response.text())
-                                .then(data => {
-                                    console.log("Notif PUT Success: ", data);
-                                    window.location.reload();
-                                })
-                                .catch((error) =>{
-                                    console.error("Notif PUT Error: ", error);
-                                })
-
-                        }, false);
                     }
                 }else{
                     notificationmessage.innerHTML = "No message.";
@@ -319,7 +244,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     //let display = new mainDisplay("roman@letausch.at");
     let display = new mainDisplay("bernhard@letausch.at");
 
-
     /*
     fetch("http://letausch.ffkledering.at:3000/whoami")
         .then(result => result.json())
@@ -328,13 +252,4 @@ document.addEventListener("DOMContentLoaded", function (event) {
         })
         .catch(error => console.error(error));
     */
-
 });
-
-function eintauschen() {
-    //displayNone();
-}
-
-function kontaktdaten() {
-    // PUSH STATUS n_state++ = 4 (disabled)
-}
