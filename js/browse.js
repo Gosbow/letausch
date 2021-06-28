@@ -132,11 +132,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(titleLink);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             display.articleDisplay.appendChild(article);
@@ -159,31 +165,52 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let auth = document.createElement("p");
-            auth.innerHTML = "Designer: " + data.a_author;
+            let b3 = document.createElement("b");
+            b3.innerHTML= "Designer: ";
+            auth.appendChild(b3);
+            auth.appendChild(document.createTextNode(data.a_author));
             article.appendChild(auth);
 
             let genre = document.createElement("p");
-            genre.innerHTML = "Genre: " + data.a_genre;
+            let b4 = document.createElement("b");
+            b4.innerHTML= "Genre: ";
+            genre.appendChild(b4);
+            genre.appendChild(document.createTextNode(data.a_genre));
             article.appendChild(genre);
 
             let players = document.createElement("p");
-            players.innerHTML = "Players: " + data.a_bgame_players;
+            let b5 = document.createElement("b");
+            b5.innerHTML= "Players: ";
+            players.appendChild(b5);
+            players.appendChild(document.createTextNode(data.a_bgame_players));
             article.appendChild(players);
 
             let playtime = document.createElement("p");
-            playtime.innerHTML = "Playing Time: " + data.a_bgame_playtime;
+            let b6 = document.createElement("b");
+            b6.innerHTML= "Playing Time: ";
+            playtime.appendChild(b6);
+            playtime.appendChild(document.createTextNode(data.a_bgame_playtime));
             article.appendChild(playtime);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
+            let b7 = document.createElement("b");
+            b7.innerHTML= "Description: ";
+            desc.appendChild(b7);
+            desc.appendChild(document.createTextNode(data.a_description));
             article.appendChild(desc);
 
             let backButton = document.createElement("button");
@@ -252,27 +279,45 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let auth = document.createElement("p");
-            auth.innerHTML = "Developer: " + data.a_author;
+            let b3 = document.createElement("b");
+            b3.innerHTML= "Developer: ";
+            auth.appendChild(b3);
+            auth.appendChild(document.createTextNode(data.a_author));
             article.appendChild(auth);
 
             let platform = document.createElement("p");
-            platform.innerHTML = "Platform: " + data.a_vgame_platform;
+            let b6 = document.createElement("b");
+            b6.innerHTML= "Platform: ";
+            platform.appendChild(b6);
+            platform.appendChild(document.createTextNode(data.a_vgame_platform));
             article.appendChild(platform);
 
             let genre = document.createElement("p");
-            genre.innerHTML = "Genre: " + data.a_genre;
+            let b4 = document.createElement("b");
+            b4.innerHTML= "Genre: ";
+            genre.appendChild(b4);
+            genre.appendChild(document.createTextNode(data.a_genre));
             article.appendChild(genre);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
+            let b7 = document.createElement("b");
+            b7.innerHTML= "Description: ";
+            desc.appendChild(b7);
+            desc.appendChild(document.createTextNode(data.a_description));
             article.appendChild(desc);
 
             let backButton = document.createElement("button");
@@ -341,23 +386,38 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let auth = document.createElement("p");
-            auth.innerHTML = "Author: " + data.a_author;
+            let b3 = document.createElement("b");
+            b3.innerHTML= "Author: ";
+            auth.appendChild(b3);
+            auth.appendChild(document.createTextNode(data.a_author));
             article.appendChild(auth);
 
             let isbn = document.createElement("p");
-            isbn.innerHTML = "ISBN: " + data.a_books_isbn;
+            let b4 = document.createElement("b");
+            b4.innerHTML= "ISBN: ";
+            isbn.appendChild(b4);
+            isbn.appendChild(document.createTextNode(data.a_books_isbn));
             article.appendChild(isbn);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
+            let b7 = document.createElement("b");
+            b7.innerHTML= "Description: ";
+            desc.appendChild(b7);
+            desc.appendChild(document.createTextNode(data.a_description));
             article.appendChild(desc);
 
             let backButton = document.createElement("button");
@@ -428,15 +488,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let desc = document.createElement("p");
-            desc.innerHTML = "Description: " + data.a_description;
+            let b7 = document.createElement("b");
+            b7.innerHTML= "Description: ";
+            desc.appendChild(b7);
+            desc.appendChild(document.createTextNode(data.a_description));
             article.appendChild(desc);
 
             let backButton = document.createElement("button");

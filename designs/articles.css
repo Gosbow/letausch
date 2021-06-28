@@ -1,21 +1,43 @@
+img{
+    width: 15vw;
+    margin: 10px;
+}
+div{
+    margin:80px;
+}
 .articles{
     border-radius: 10px;
     border-style: solid;
     border-color: #548235;
     margin-top: 10px;
+    font-size: 1em;
+}
+.articles h2{
+    font-size: 1.5em;
+    font-weight: bolder;
+    margin-left: 5px;
+}
+.articles p{
+    font-size: 1.1em;
+    margin-left: 5px;
+    margin-bottom: 3px;
 }
 .articles:hover{
     border-color: #A9D18E;
 }
-img{
-    width: 10vw;
-    margin: 10px;
-}
+
 .articles a{
     margin-top: 0;
 }
-div{
-    margin:80px;
+.articles button{
+    background-color: #548235;
+    color: white;
+    font-weight:bold;
+    font-size: 12px;
+    margin: 2px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
 }
 .specificarticle{
     border-radius: 10px;
@@ -32,4 +54,14 @@ div{
 }
 .notifications:hover{
     border-color: #A9D18E;
+}
+.notifications button{
+    background-color: #548235;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 2px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
 }
