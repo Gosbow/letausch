@@ -122,13 +122,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 head.innerHTML = "This could be your trade offer!";
                 def.appendChild(head);
                 let cat = document.createElement("p");
+                cat.className = "advert";
                 cat.innerHTML = "Board Games, Video Games, Books and more";
                 def.appendChild(cat);
-                let date = document.createElement("p");
-                date.innerHTML = "Trade offer placed on: Today";
-                def.appendChild(date);
                 let desc = document.createElement("p");
-                desc.innerHTML = "Description: Just navigate to My Area / Offer Board Game, etc. and get started now!";
+                desc.className = "advert";
+                desc.innerHTML = "Just navigate to My \"My Area\" and get started now!";
                 def.appendChild(desc);
                 display.areaDisplay.appendChild(def);
             }
@@ -187,54 +186,70 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let auth = document.createElement("p");
+            let b3 = document.createElement("b");
+            b3.innerHTML = "Designer: "
+            auth.appendChild(b3);
             let authValue = document.createElement("span");
             authValue.innerHTML = data.a_author.toString();
             authValue.id = "a_author_value_" + data.a_id;
-            auth.innerHTML = "Designer: "
             auth.id = "a_author_" + data.a_id;
             auth.appendChild(authValue);
             article.appendChild(auth);
 
             let genre = document.createElement("p");
+            let b4 = document.createElement("b");
+            b4.innerHTML = "Genre: "
+            genre.appendChild(b4);
             let genreValue = document.createElement("span");
             genreValue.innerHTML = data.a_genre.toString();
             genreValue.id = "a_genre_value_" + data.a_id;
-            genre.innerHTML = "Genre: ";
             genre.id = "a_genre_" + data.a_id;
             genre.appendChild(genreValue);
             article.appendChild(genre);
 
             let players = document.createElement("p");
+            let b5 = document.createElement("b");
+            b5.innerHTML = "Players: "
+            players.appendChild(b5);
             let playersValue = document.createElement("span");
             playersValue.innerHTML = data.a_bgame_players.toString();
             playersValue.id = "a_bgame_players_value_" + data.a_id;
-            players.innerHTML = "Players: ";
             players.id = "a_bgame_players_" + data.a_id;
             players.appendChild(playersValue);
             article.appendChild(players);
 
             let playtime = document.createElement("p");
+            let b6 = document.createElement("b");
+            b6.innerHTML = "Playing Time: "
+            playtime.appendChild(b6);
             let playtimeValue = document.createElement("span");
             playtimeValue.innerHTML = data.a_bgame_playtime.toString();
             playtimeValue.id = "a_bgame_playtime_value_" + data.a_id;
-            playtime.innerHTML = "Playing Time: ";
             playtime.id = "a_bgame_playtime_" + data.a_id;
             playtime.appendChild(playtimeValue);
             article.appendChild(playtime);
 
             let desc = document.createElement("p");
+            let b7 = document.createElement("b");
+            b7.innerHTML = "Description: "
+            desc.appendChild(b7);
             let descValue = document.createElement("span");
             descValue.innerHTML = data.a_description.toString();
             descValue.id = "a_description_value_" + data.a_id;
-            desc.innerHTML = "Description: ";
             desc.id = "a_description_" + data.a_id;
             desc.appendChild(descValue);
             article.appendChild(desc);
@@ -327,45 +342,59 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let auth = document.createElement("p");
+            let b3 = document.createElement("b");
+            b3.innerHTML = "Developer: "
+            auth.appendChild(b3);
             let authValue = document.createElement("span");
             authValue.innerHTML = data.a_author.toString();
             authValue.id = "a_author_value_" + data.a_id;
-            auth.innerHTML = "Developer: "
             auth.id = "a_author_" + data.a_id;
             auth.appendChild(authValue);
             article.appendChild(auth);
 
             let platform = document.createElement("p");
+            let b4 = document.createElement("b");
+            b4.innerHTML = "Platform: ";
+            platform.appendChild(b4);
             let platformValue = document.createElement("span");
             platformValue.innerHTML = data.a_vgame_platform.toString();
             platformValue.id = "a_vgame_platform_value_" + data.a_id;
-            platform.innerHTML = "Platform: ";
             platform.id = "a_vgame_platform_" + data.a_id;
             platform.appendChild(platformValue);
             article.appendChild(platform);
 
             let genre = document.createElement("p");
+            let b5 = document.createElement("b");
+            b5.innerHTML = "Genre: "
+            genre.appendChild(b5);
             let genreValue = document.createElement("span");
             genreValue.innerHTML = data.a_genre.toString();
             genreValue.id = "a_genre_value_" + data.a_id;
-            genre.innerHTML = "Genre: ";
             genre.id = "a_genre_" + data.a_id;
             genre.appendChild(genreValue);
             article.appendChild(genre);
 
             let desc = document.createElement("p");
+            let b7 = document.createElement("b");
+            b7.innerHTML = "Description: "
+            desc.appendChild(b7);
             let descValue = document.createElement("span");
             descValue.innerHTML = data.a_description.toString();
             descValue.id = "a_description_value_" + data.a_id;
-            desc.innerHTML = "Description: ";
             desc.id = "a_description_" + data.a_id;
             desc.appendChild(descValue);
             article.appendChild(desc);
@@ -451,36 +480,48 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let auth = document.createElement("p");
+            let b3 = document.createElement("b");
+            b3.innerHTML = "Author: "
+            auth.appendChild(b3);
             let authValue = document.createElement("span");
             authValue.innerHTML = data.a_author.toString();
             authValue.id = "a_author_value_" + data.a_id;
-            auth.innerHTML = "Author: "
             auth.id = "a_author_" + data.a_id;
             auth.appendChild(authValue);
             article.appendChild(auth);
 
             let isbn = document.createElement("p");
+            let b4 = document.createElement("b");
+            b4.innerHTML = "ISBN: "
+            isbn.appendChild(b4);
             let isbnValue = document.createElement("span");
             isbnValue.innerHTML = data.a_books_isbn.toString();
             isbnValue.id = "a_books_isbn_value_" + data.a_id;
-            isbn.innerHTML = "ISBN: ";
             isbn.id = "a_books_isbn_" + data.a_id;
             isbn.appendChild(isbnValue);
             article.appendChild(isbn);
 
             let desc = document.createElement("p");
+            let b7 = document.createElement("b");
+            b7.innerHTML = "Description: "
+            desc.appendChild(b7);
             let descValue = document.createElement("span");
             descValue.innerHTML = data.a_description.toString();
             descValue.id = "a_description_value_" + data.a_id;
-            desc.innerHTML = "Description: ";
             desc.id = "a_description_" + data.a_id;
             desc.appendChild(descValue);
             article.appendChild(desc);
@@ -559,18 +600,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
             article.appendChild(title);
 
             let cat = document.createElement("p");
-            cat.innerHTML = "Category: " + data.a_category;
+            let b1 = document.createElement("b");
+            b1.innerHTML= "Category: ";
+            cat.appendChild(b1);
+            cat.appendChild(document.createTextNode(data.a_category));
             article.appendChild(cat);
 
             let pub = document.createElement("p");
-            pub.innerHTML = "Trade offer placed on: " + new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"});
+            let b2 = document.createElement("b");
+            b2.innerHTML= "Trade offer placed on: ";
+            pub.appendChild(b2);
+            pub.appendChild(document.createTextNode(new Date(Date.parse(data.a_publicationdate)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"})));
             article.appendChild(pub);
 
             let desc = document.createElement("p");
+            let b7 = document.createElement("b");
+            b7.innerHTML = "Description: "
+            desc.appendChild(b7);
             let descValue = document.createElement("span");
             descValue.innerHTML = data.a_description.toString();
             descValue.id = "a_description_value_" + data.a_id;
-            desc.innerHTML = "Description: ";
             desc.id = "a_description_" + data.a_id;
             desc.appendChild(descValue);
             article.appendChild(desc);
