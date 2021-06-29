@@ -222,14 +222,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             requestButton.innerHTML = "Request Trade";
             requestButton.addEventListener('click', function(){
 
-                let current = new Date(Date.now());
-                let currentdateJSON =
-                    current.getDate() + "." +
-                    current.getMonth()+1 + "." +
-                    current.getFullYear() + " " +
-                    current.getHours() + ":" +
-                    current.getMinutes() + ":" +
-                    current.getSeconds();
+                let currentdateJSON = new Date().toISOString();
 
                 fetch("http://letausch.ffkledering.at:3000/notification", {
                     method: "POST",
@@ -329,14 +322,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             requestButton.innerHTML = "Request Trade";
             requestButton.addEventListener('click', function(){
 
-                let current = new Date(Date.now());
-                let currentdateJSON =
-                    current.getDate() + "." +
-                    current.getMonth()+1 + "." +
-                    current.getFullYear() + " " +
-                    current.getHours() + ":" +
-                    current.getMinutes() + ":" +
-                    current.getSeconds();
+                let currentdateJSON = new Date().toISOString();
 
                 fetch("http://letausch.ffkledering.at:3000/notification", {
                     method: "POST",
@@ -429,14 +415,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             requestButton.innerHTML = "Request Trade";
             requestButton.addEventListener('click', function(){
 
-                let current = new Date(Date.now());
-                let currentdateJSON =
-                    current.getDate() + "." +
-                    current.getMonth()+1 + "." +
-                    current.getFullYear() + " " +
-                    current.getHours() + ":" +
-                    current.getMinutes() + ":" +
-                    current.getSeconds();
+                let currentdateJSON = new Date().toISOString();
 
                 fetch("http://letausch.ffkledering.at:3000/notification", {
                     method: "POST",
@@ -517,14 +496,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             requestButton.innerHTML = "Request Trade";
             requestButton.addEventListener('click', function(){
 
-                let current = new Date(Date.now());
-                let currentdateJSON =
-                    current.getDate() + "." +
-                    current.getMonth()+1 + "." +
-                    current.getFullYear() + " " +
-                    current.getHours() + ":" +
-                    current.getMinutes() + ":" +
-                    current.getSeconds();
+                let currentdateJSON = new Date().toISOString();
 
                 fetch("http://letausch.ffkledering.at:3000/notification", {
                     method: "POST",
