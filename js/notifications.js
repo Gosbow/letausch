@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             .then(function(json_responder){
                 if (data.n_state === 1) {
                     if (userID === data.n_responder) {
-                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + data.n_requester + " möchte gerne \"" + json_responder.a_title + "\" eintauschen."; // add as defined
+                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + data.n_requester + " would like to trade \"" + json_responder.a_title + "\" with you."; // add as defined
                         // notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + data.n_requester + " möchte gerne \"" + json_responder.a_title + "\" eintauschen."; // add as defined
 
                         notificationaction.innerHTML = "Eintauschen";
@@ -448,7 +448,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
                         }, false);
                     } else if (userID === data.n_requester) {
-                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "Der Tausch für \"" + json_responder.a_title + "\" wurde bei " + data.n_responder + " angefragt."; // add as defined
+                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "Your trade request for \"" + json_responder.a_title + "\" was sent to " + data.n_responder + "."; // add as defined
                         notificationaction.style.display="none";
                     }
                 }
@@ -462,14 +462,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                 .then(function(json_requester){
 
                                 if (userID === data.n_responder) {
-                                    notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "Der Tausch für \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" wurde bei " + data.n_requester + " angefragt."; // add as defined
+                                    notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "Your trade request for \"" + json_responder.a_title + "\" for \"" + json_requester.a_title + "\" was sent to " + data.n_requester + "."; // add as defined
                                     notificationaction.style.display="none";
                                 }
 
                                 else if (userID === data.n_requester) {
-                                    notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + data.n_responder + " möchte gerne \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" mit dir tauschen."; // add as defined
+                                    notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + data.n_responder + " would like to trade \"" + json_responder.a_title + "\" for \"" + json_requester.a_title + "\" with you."; // add as defined
                                     notificationaction.innerHTML = "Annehmen";
-                                    notificationaction.addEventListener("click", addEventListener('click', function(){
+                                    notificationaction.addEventListener('click', function(){
                                         let putURL = getURL + data.n_id;
 
                                         let currentdateJSON = new Date().toISOString();
@@ -497,7 +497,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                 console.error("Notif PUT Error: ", error);
                                             })
 
-                                    }, false));
+                                    }, false);
                                 }
                             })
                         })
@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     notificationaction.style.display="none";
                     if (userID === data.n_responder) {
 
-                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "Der Tausch für \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" mit " + data.n_requester + " wurde bestätigt."; // add as defined
+                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "The trading arrangement: \"" + json_responder.a_title + "\" for \"" + json_requester.a_title + "\" was accepted by " + data.n_requester + "."; // add as defined
 
                         fetch("http://letausch.ffkledering.at:3000/users/" + data.n_requester)
                             .then(function (response) {
@@ -534,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             });
 
                     } else if (userID === data.n_requester) {
-                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "Der Tausch für \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" mit " + data.n_responder + " wurde bestätigt." ; // add as defined
+                        notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + "The trading arrangement: \"" + json_responder.a_title + "\" for \"" + json_requester.a_title + "\" was accepted by " + data.n_responder + "." ; // add as defined
 
                         fetch("http://letausch.ffkledering.at:3000/users/" + data.n_responder)
                             .then(function(response){
