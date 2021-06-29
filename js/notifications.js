@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", function (event) {
     const getURL = "http://letausch.ffkledering.at:3000/notification/";
+    const getArticleURL = "http://letausch.ffkledering.at:3000/article/";
+
+
+    /**
+     * We are very sorry for the lack of human readability in this js file :(
+     */
 
     class Notification{
         constructor(data) {
@@ -66,9 +72,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 let articlesArea = document.createElement("span");
                 articlesArea.id = "articlesArea";
 
+                fetch(getArticleURL + data.n_resarticle)
+                    .then(function(response){
+                        response.json()
+                            .then(function(json_responder){
                 if (data.n_state === 1) {
                     if (userID === data.n_responder) {
-                        notificationmessage.innerHTML = data.n_date + "       " + data.n_requester + " möchte gerne " + data.n_resarticle + " eintauschen."; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + data.n_requester + " möchte gerne \"" + json_responder.a_title + "\" eintauschen."; // add as defined
+                        // notificationmessage.innerHTML = new Date(Date.parse(data.n_date)).toLocaleDateString("en-UK", {timeZone: "Europe/Vienna"}) + "       " + data.n_requester + " möchte gerne \"" + json_responder.a_title + "\" eintauschen."; // add as defined
 
                         notificationaction.innerHTML = "Eintauschen";
                         notificationaction.addEventListener("click", function(){
@@ -157,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                             current.getHours() + ":" +
                                                             current.getMinutes() + ":" +
                                                             current.getSeconds();
+                                                        // let currentdateJSON = new Date().toISOString();
 
                                                         fetch(putURL, {
                                                             method: "PUT",
@@ -257,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                             current.getHours() + ":" +
                                                             current.getMinutes() + ":" +
                                                             current.getSeconds();
+                                                        // let currentdateJSON = new Date().toISOString();
 
                                                         fetch(putURL, {
                                                             method: "PUT",
@@ -351,6 +364,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                             current.getHours() + ":" +
                                                             current.getMinutes() + ":" +
                                                             current.getSeconds();
+                                                        // let currentdateJSON = new Date().toISOString();
 
                                                         fetch(putURL, {
                                                             method: "PUT",
@@ -431,6 +445,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                                 current.getHours() + ":" +
                                                                 current.getMinutes() + ":" +
                                                                 current.getSeconds();
+                                                            // let currentdateJSON = new Date().toISOString();
 
                                                             fetch(putURL, {
                                                                 method: "PUT",
@@ -460,70 +475,84 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                                         articlesArea.appendChild(article);
                                                     }
                                                 }
-
 //-----------------------------------------------------------------------------------------------------------------------------------------------
                                         })
                                 })
 
                         }, false);
                     } else if (userID === data.n_requester) {
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " wurde bei " + data.n_responder + " angefragt."; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für \"" + json_responder.a_title + "\" wurde bei " + data.n_responder + " angefragt."; // add as defined
                         notificationaction.style.display="none";
                     }
                 }
+
+
 
                 else if (data.n_state === 2) {
-                    if (userID === data.n_responder) {
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " wurde bei " + data.n_requester + " angefragt."; // add as defined
-                        notificationaction.style.display="none";
-                    }
+                    fetch(getArticleURL + data.n_reqarticle)
+                        .then(function(response){
+                            response.json()
+                                .then(function(json_requester){
 
-                    else if (userID === data.n_requester) {
-                        notificationmessage.innerHTML = data.n_date + "       " + data.n_responder + " möchte gerne " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit dir tauschen."; // add as defined
-                        notificationaction.innerHTML = "Annehmen";
-                        notificationaction.addEventListener("click", addEventListener('click', function(){
-                            let putURL = getURL + data.n_id;
+                                if (userID === data.n_responder) {
+                                    notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" wurde bei " + data.n_requester + " angefragt."; // add as defined
+                                    notificationaction.style.display="none";
+                                }
 
-                            let current = new Date(Date.now());
-                            let currentdateJSON =
-                                current.getDate() + "." +
-                                current.getMonth()+1 + "." +
-                                current.getFullYear() + " " +
-                                current.getHours() + ":" +
-                                current.getMinutes() + ":" +
-                                current.getSeconds();
+                                else if (userID === data.n_requester) {
+                                    notificationmessage.innerHTML = data.n_date + "       " + data.n_responder + " möchte gerne \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" mit dir tauschen."; // add as defined
+                                    notificationaction.innerHTML = "Annehmen";
+                                    notificationaction.addEventListener("click", addEventListener('click', function(){
+                                        let putURL = getURL + data.n_id;
 
-                            fetch(putURL, {
-                                method: "PUT",
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    "n_requester": data.n_requester,
-                                    "n_responder": data.n_responder,
-                                    "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
-                                    "n_resarticle": data.n_resarticle,
-                                    "n_state": 3,
-                                    "n_date": currentdateJSON
-                                }),
+                                        let current = new Date(Date.now());
+                                        let currentdateJSON =
+                                            current.getDate() + "." +
+                                            current.getMonth()+1 + "." +
+                                            current.getFullYear() + " " +
+                                            current.getHours() + ":" +
+                                            current.getMinutes() + ":" +
+                                            current.getSeconds();
+                                        // let currentdateJSON = new Date().toISOString();
+
+                                        fetch(putURL, {
+                                            method: "PUT",
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({
+                                                "n_requester": data.n_requester,
+                                                "n_responder": data.n_responder,
+                                                "n_reqarticle": data.n_reqarticle, //data.n_reqarticle,
+                                                "n_resarticle": data.n_resarticle,
+                                                "n_state": 3,
+                                                "n_date": currentdateJSON
+                                            }),
+                                        })
+                                            .then(response => response.text())
+                                            .then(data => {
+                                                console.log("Notif PUT Success: ", data);
+                                                window.location.reload();
+                                            })
+                                            .catch((error) =>{
+                                                console.error("Notif PUT Error: ", error);
+                                            })
+
+                                    }, false));
+                                }
                             })
-                                .then(response => response.text())
-                                .then(data => {
-                                    console.log("Notif PUT Success: ", data);
-                                    window.location.reload();
-                                })
-                                .catch((error) =>{
-                                    console.error("Notif PUT Error: ", error);
-                                })
-
-                        }, false));
-                    }
+                        })
                 }
                 else if (data.n_state === 3) {
+                    fetch(getArticleURL + data.n_reqarticle)
+                        .then(function(response){
+                            response.json()
+                                .then(function(json_requester){
+
                     notificationaction.style.display="none";
                     if (userID === data.n_responder) {
 
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_requester + " wurde bestätigt."; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" mit " + data.n_requester + " wurde bestätigt."; // add as defined
 
                         fetch("http://letausch.ffkledering.at:3000/users/" + data.n_requester)
                             .then(function (response) {
@@ -546,7 +575,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                             });
 
                     } else if (userID === data.n_requester) {
-                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für " + data.n_resarticle + " gegen " + data.n_reqarticle + " mit " + data.n_responder + " wurde bestätigt." ; // add as defined
+                        notificationmessage.innerHTML = data.n_date + "       " + "Der Tausch für \"" + json_responder.a_title + "\" gegen \"" + json_requester.a_title + "\" mit " + data.n_responder + " wurde bestätigt." ; // add as defined
                         //notificationaction.innerHTML = "Tausch abschließen";
 
                         fetch("http://letausch.ffkledering.at:3000/users/" + data.n_responder)
@@ -567,8 +596,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
                                         }
                                         document.getElementById("notification"+data.n_id).appendChild(element);
                                     })
-                            });
-                    }
+                                });
+                            }
+                        })
+                    })
                 }else{
                     notificationmessage.innerHTML = "No message.";
                     notificationaction.innerHTML = "no button";
@@ -577,6 +608,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("notification"+data.n_id).appendChild(notificationmessage);
                 document.getElementById("notification"+data.n_id).appendChild(notificationaction);
                 document.getElementById("notification"+data.n_id).appendChild(articlesArea);
+                    })
+                })
 
             }
         }
